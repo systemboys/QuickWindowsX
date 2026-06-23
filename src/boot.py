@@ -39,7 +39,7 @@ def _warn(msg):
 
 
 def _starting(msg):
-    print(f"{_DIM}         Starting {msg}...{_RESET}")
+    print(f"         Starting {msg}...")
     time.sleep(random.uniform(0.08, 0.18))
 
 

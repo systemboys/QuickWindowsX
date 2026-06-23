@@ -88,9 +88,6 @@ function Refresh-Path {
 
 # ─── Principal ───────────────────────────────────────────────────────────────
 
-$Host.UI.RawUI.BackgroundColor = "Black"
-Clear-Host
-
 $ocorreuErro = $false
 
 try {
