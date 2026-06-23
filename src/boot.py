@@ -3,6 +3,7 @@ import sys
 import time
 import json
 import random
+import urllib.request
 from pathlib import Path
 
 # Habilitar ANSI no Windows (suportado no Windows 10+)
@@ -43,6 +44,21 @@ def _starting(msg):
     time.sleep(random.uniform(0.08, 0.18))
 
 
+def _check_version():
+    """Retorna (local_ver, remote_ver). remote_ver é None se a verificação falhar."""
+    try:
+        local = json.loads((ROOT / "version.json").read_text(encoding="utf-8")).get("version", "")
+    except Exception:
+        return None, None
+    try:
+        url = "https://raw.githubusercontent.com/systemboys/QuickWindowsX/main/version.json"
+        with urllib.request.urlopen(url, timeout=4) as resp:
+            remote = json.loads(resp.read().decode("utf-8")).get("version", "")
+        return local, remote
+    except Exception:
+        return local, None
+
+
 def _check_file(rel_path, label=None):
     label = label or rel_path
     if (ROOT / rel_path).exists():
@@ -58,7 +74,12 @@ def executar():
 
     # ── Inicializacao do sistema ──────────────────────────────────────────────
     _starting("QuickWindowsX")
-    _ok("Iniciado QuickWindowsX.")
+    local_ver, remote_ver = _check_version()
+    if remote_ver and remote_ver != local_ver:
+        print(f"[ {_YELLOW}NOVO{_RESET} ] v{remote_ver} disponivel! (instalada: v{local_ver}) — use '1 > 1' para atualizar.")
+        time.sleep(random.uniform(0.07, 0.22))
+    else:
+        _ok(f"Versao {local_ver} — atualizada." if remote_ver else "QuickWindowsX iniciado.")
 
     # ── Arquivos principais ───────────────────────────────────────────────────
     _starting("verificacao de arquivos principais")
