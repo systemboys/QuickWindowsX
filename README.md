@@ -4,6 +4,8 @@ Menu interativo para agilizar instalações, rotinas e configurações no Window
 
 Versão atual: **2.1.0**
 
+[![Menu interativo QuickWindowsX](./Images/MenuQWX.png "Menu interativo QuickWindowsX")](#rotinas-para-instala%C3%A7%C3%B5es-padr%C3%A3o)
+
 ---
 
 ## O que é
@@ -106,6 +108,67 @@ QuickWindowsX/
 | 7 | Softwares para Escritório (Office 365, 2016–2019, 2019–2021, atalhos) |
 | 8 | Sistemas Operacionais Microsoft (Windows 10 x32/x64, Windows 11 x64) |
 | 9 | Executar Rotinas (execução em lote por números separados por vírgula) |
+
+---
+
+## Rotinas para instalações padrão
+
+Rotinas formuladas pela equipe de TI da GLOBAL TEC Informática para uso no QuickWindowsX.
+
+### Formatação remota
+
+```bash
+256,2512,616,81 # Windows 10 22H2 BrazilianPortuguese x32
+256,2512,616,82 # Windows 10 22H2 BrazilianPortuguese x64
+256,2512,616,83 # Windows 11 24H2 BrazilianPortuguese x64
+┬── ┬─── ┬── ┬─
+│   │    │   │
+└───┼────┼───┼──┤ # Gerenciamento de Discos (diskmgmt.msc)
+    │    │   │  │ Recurso do Windows para particionar o
+    │    │   │  │ dispositivo de armazenamento para colocar a ISO.
+    │    │   │
+    └────┼───┼──┤ # Gerenciar arquivos e pastas
+         │   │  │ Copiar ou mover os arquivos importantes do
+         │   │  │ usuário para a unidade "D:" e evitar perdas
+         │   │  │ inesperadas.
+         │   │
+         └───┼──┤ # WinToHDD
+             │  │ Software que faz a reinstalação do sistema.
+             │  │ A opção a qual deve ser utilizada é para
+             │  │ reinstalar o sistema.
+             │
+             └──┤ # Sistemas Operacionais Microsoft…
+                │ Essa rotina indica qual das ISOs será baixada.
+                │ O técnico informará para que possa ser baixada
+                │ na unidade "D:\_GTi_Support_" por exemplo.
+```
+
+### Após formatação
+
+```
+Rotina  Descrição
+-------------------------------------------------
+26      Criar atalhos para 'Desligar e Reiniciar'
+2510    Editar Configurações do Plano (powercfg.cpl)
+2513    Configurações do Windows (ms-settings)
+36      Navegador Microsoft Edge
+311     Navegador Mozilla Firefox
+37      Navegador Google Chrome
+63      WinRAR
+68      VLC Media Player
+66      Acrobat Reader DC
+71      Microsoft Office 365
+74      Criar atalhos para Apps do Office 2021
+627     Windows Update Activation
+626     Limpar Arquivos Temporários
+-------------------------------------------------
+```
+
+Copie as rotinas a executar no QuickWindowsX:
+
+```bash
+26,2510,2513,36,311,37,63,68,66,71,74,627,626
+```
 
 ---
 
