@@ -22,6 +22,9 @@
 # v1.1.1 2026-06-23, Marcos Aurélio:
 #   - Removida a definição de fundo preto (deixa o padrão do terminal).
 #   - URL do ícone corrigida: usa QuickWindows/raw enquanto QWX não tem ícone publicado.
+# v1.1.2 2026-06-23, Marcos Aurélio:
+#   - Remoção defensiva de $qwxDir antes do Rename-Item evita erro "arquivo já existente"
+#     quando o diretório antigo não foi removido completamente pelo instalador anterior.
 #
 # Licença: GPL.
 
@@ -139,6 +142,7 @@ try {
             Remove-Item -Path $qwxZip -Force -ErrorAction SilentlyContinue
 
             if (Test-Path $qwxTemp) {
+                if (Test-Path $qwxDir) { Remove-Item -Recurse -Force $qwxDir -ErrorAction SilentlyContinue }
                 Rename-Item -Path $qwxTemp -NewName "QuickWindowsX"
                 Write-Host "QuickWindowsX installed at: $qwxDir"
                 Write-QWXLog "QuickWindowsX extraido em: $qwxDir."
