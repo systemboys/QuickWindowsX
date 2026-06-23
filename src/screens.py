@@ -800,15 +800,33 @@ def _limpar_spooler():
     print()
     print("  === Limpar Spooler de Impressao ===")
     print()
-    print("  O servico Spooler sera reiniciado e os trabalhos pendentes removidos.")
+    print("  O servico Spooler sera parado, arquivos pendentes removidos e reiniciado.")
     print()
     if not _confirmar("Deseja limpar o spooler agora?"):
         return
     print()
-    print("  Limpando spooler...")
     ps_script = r"""
+        $spoolDir = "$env:SystemRoot\System32\spool\PRINTERS"
+
+        Write-Host "  Parando servico Spooler..." -ForegroundColor Cyan
         Stop-Service Spooler -Force -ErrorAction SilentlyContinue
-        Remove-Item "$env:SystemRoot\System32\spool\PRINTERS\*" -Recurse -Force -ErrorAction SilentlyContinue
+
+        $arquivos = Get-ChildItem -Path $spoolDir -Include "*.SHD","*.SPL" -Recurse -ErrorAction SilentlyContinue
+        if ($arquivos) {
+            foreach ($arq in $arquivos) {
+                try {
+                    Remove-Item $arq.FullName -Force -ErrorAction Stop
+                    Write-Host "  [OK] Removido: $($arq.FullName)" -ForegroundColor Green
+                } catch {
+                    Write-Host "  [AVISO] Nao removido: $($arq.FullName)" -ForegroundColor Yellow
+                }
+            }
+        } else {
+            Write-Host "  Nenhum arquivo de impressao pendente encontrado." -ForegroundColor DarkGray
+        }
+
+        Write-Host ""
+        Write-Host "  Reiniciando servico Spooler..." -ForegroundColor Cyan
         Start-Service Spooler -ErrorAction SilentlyContinue
         Write-Host ""
         Write-Host "  [OK] Spooler de impressao limpo e reiniciado." -ForegroundColor Green
@@ -824,16 +842,45 @@ def _limpar_temporarios():
     print("  === Limpar Arquivos Temporarios ===")
     print()
     print("  Serao removidos arquivos de %TEMP% e C:\\Windows\\Temp.")
+    print("  O diretorio QuickWindowsX sera preservado.")
     print()
     if not _confirmar("Deseja limpar os arquivos temporarios agora?"):
         return
     print()
-    print("  Removendo arquivos temporarios...")
     ps_script = r"""
-        Remove-Item "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
-        Remove-Item "C:\Windows\Temp\*" -Recurse -Force -ErrorAction SilentlyContinue
+        $deletados = 0
+        $erros     = 0
+        $qwxPath   = "$env:TEMP\QuickWindowsX"
+
+        Write-Host "  Limpando C:\Windows\Temp..." -ForegroundColor Cyan
+        Get-ChildItem -Path "$env:SystemRoot\Temp" -ErrorAction SilentlyContinue | ForEach-Object {
+            try {
+                Remove-Item $_.FullName -Force -Recurse -ErrorAction Stop
+                Write-Host "  Removido: $($_.FullName)"
+                $deletados++
+            } catch {
+                Write-Host "  [AVISO] $($_.Name): $($_.Exception.Message)" -ForegroundColor Yellow
+                $erros++
+            }
+        }
+
         Write-Host ""
-        Write-Host "  [OK] Arquivos temporarios removidos." -ForegroundColor Green
+        Write-Host "  Limpando $env:TEMP..." -ForegroundColor Cyan
+        Get-ChildItem -Path $env:TEMP -ErrorAction SilentlyContinue |
+            Where-Object { $_.FullName -ne $qwxPath } |
+            ForEach-Object {
+                try {
+                    Remove-Item $_.FullName -Force -Recurse -ErrorAction Stop
+                    Write-Host "  Removido: $($_.FullName)"
+                    $deletados++
+                } catch {
+                    Write-Host "  [AVISO] $($_.Name): $($_.Exception.Message)" -ForegroundColor Yellow
+                    $erros++
+                }
+            }
+
+        Write-Host ""
+        Write-Host "  [OK] Concluido: $deletados item(ns) removido(s), $erros nao puderam ser removidos." -ForegroundColor Green
     """
     _ps(ps_script)
     print()
