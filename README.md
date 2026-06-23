@@ -2,7 +2,7 @@
 
 Menu interativo para agilizar instalações, rotinas e configurações no Windows durante formatação ou manutenção de computadores.
 
-Versão atual: **2.1.0**
+Versão atual: **2.2.0**
 
 [![Menu interativo QuickWindowsX](./Images/MenuQWX.png "Menu interativo QuickWindowsX")](#rotinas-para-instala%C3%A7%C3%B5es-padr%C3%A3o)
 
@@ -177,6 +177,7 @@ Copie as rotinas a executar no QuickWindowsX:
 > As versões **1.x.x** correspondem ao **QuickWindows** (base original em PowerShell/CMD).
 > A versão **2.0.0** marca o início do **QuickWindowsX** (reescrita em Python 3).
 
+- **v2.2.0** 2026-06-23 — Verificacao de atualizacao disponivel na inicializacao do boot e no cabecalho do menu principal: exibe aviso em amarelo quando ha versao mais recente no repositorio, com instrucao de como atualizar. Opcao "Deletar QuickWindowsX" agora remove tambem o atalho "GTi Support QWX" da Area de Trabalho apos a exclusao do diretorio.
 - **v2.1.0** 2026-06-23 — Instalador remoto `install.ps1` via `irm qwx.gti1.com.br | iex`: eleva para administrador, cria atalho **GTi Support QWX** na Área de Trabalho com ícone, baixa o repositório do GitHub e inicia o menu. Ícone `Images/QuickWindowsX.ico` adicionado. Removida definição de fundo preto de `setup.ps1`. Removido código ANSI dim de `boot.py` (renderizava azul no conhost do Windows).
 - **v2.0.0** 2026-06-23 — **QuickWindowsX**: reescrita completa em Python 3. Motor de menus orientado a dados (`_submenu`), instalador genérico único (`run_package.ps1`) para EXE/MSI/ZIP, URLs centralizadas em `urls.json`, config.json com título da janela e beeps, rotinas em lote com numeração por sessão, logs em `%USERPROFILE%\GTiSupport`, desligamento agendado polimórfico, sessão Redes, execução de comandos PowerShell, suporte a desenvolvimento em Linux.
 - **v1.84.0** 2025-09-09 — Opção para download e execução de WizTree e WizTree64.

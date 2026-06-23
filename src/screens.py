@@ -498,6 +498,7 @@ def _deletar_quickwindowsx():
     print()
     print("  Sera removido:")
     print("    - %TEMP%\\QuickWindowsX")
+    print("    - Atalho 'GTi Support QWX' da Area de Trabalho")
     print()
     print("  Sera preservado:")
     print("    - %USERPROFILE%\\GTiSupport\\ (historico, logs e icones)")
@@ -532,6 +533,11 @@ def _deletar_quickwindowsx():
         "    timeout /t 2 /nobreak > nul\r\n"
         "    goto retry\r\n"
         ")\r\n"
+        'powershell -NoProfile -Command "'
+        "$d=[Environment]::GetFolderPath(\'Desktop\');"
+        " $f=Join-Path $d \'GTi Support QWX.lnk\';"
+        " if(Test-Path $f){Remove-Item $f -Force}"
+        '"\r\n'
         'del /f /q "%~f0"\r\n',
         encoding="ascii",
     )
