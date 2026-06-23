@@ -12,20 +12,46 @@ QuickWindowsX é a segunda geração do QuickWindows, reescrita do zero em Pytho
 
 ---
 
-## Como executar no Windows
+## Instalação
 
-Clique duas vezes em **`run.cmd`** ou execute pelo Prompt de Comandos:
+### Via PowerShell (recomendado)
 
+Execute o seguinte comando no **Windows PowerShell como administrador**:
+
+```powershell
+irm qwx.gti1.com.br | iex
 ```
-run.cmd
+
+> Quando você executa `irm qwx.gti1.com.br | iex`, o PowerShell realiza duas ações:
+>
+> 1. **`irm`** (alias de `Invoke-RestMethod`) — busca o script `install.ps1` hospedado em `qwx.gti1.com.br` diretamente da internet.
+> 2. **`iex`** (alias de `Invoke-Expression`) — executa o conteúdo baixado na memória, sem salvar arquivo em disco.
+>
+> ### O que o instalador faz
+>
+> 1. Verifica se está rodando como administrador — se não estiver, reinicia elevado automaticamente.
+> 2. Cria o diretório `%USERPROFILE%\GTiSupport\` para logs e ícone.
+> 3. Cria o atalho **GTi Support QWX** na Área de Trabalho.
+> 4. Baixa o QuickWindowsX do GitHub para `%TEMP%\QuickWindowsX\`.
+> 5. Instala o Python 3 automaticamente (se não estiver instalado).
+> 6. Inicia o menu interativo.
+>
+> Nas execuções seguintes, basta clicar no atalho **GTi Support QWX** na Área de Trabalho ou repetir o mesmo comando.
+
+### Instalação manual
+
+1. Baixe o repositório como ZIP pelo GitHub e extraia para um diretório de sua escolha.
+2. Certifique-se de que o **Python 3.8 ou superior** está instalado.
+   - Download: https://www.python.org/downloads/
+   - Durante a instalação, marque **"Add Python to PATH"**.
+3. Clique duas vezes em **`run.cmd`** (eleva para administrador automaticamente).
+
+### Se quiser salvar o instalador
+
+```powershell
+Invoke-WebRequest -Uri "https://qwx.gti1.com.br" -OutFile "$env:TEMP\install.ps1"
+& "$env:TEMP\install.ps1"
 ```
-
-### Requisito
-
-Python 3.8 ou superior instalado.
-Download: https://www.python.org/downloads/
-
-> Durante a instalação, marque a opção **"Add Python to PATH"**.
 
 ---
 
@@ -33,6 +59,7 @@ Download: https://www.python.org/downloads/
 
 ```
 QuickWindowsX/
+├── install.ps1         ← instalador remoto (irm qwx.gti1.com.br | iex)
 ├── run.cmd             ← executa no Windows (eleva para administrador)
 ├── setup.ps1           ← configura o ambiente antes do menu
 ├── main.py             ← ponto de entrada Python
