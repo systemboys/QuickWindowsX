@@ -545,6 +545,55 @@ def _deletar_quickwindowsx():
     sys.exit(0)
 
 
+def _atualizar_quickwindowsx():
+    _clear()
+    print()
+    print("  === Atualizar QuickWindowsX ===")
+    print()
+    print("  O QuickWindowsX sera fechado, os arquivos atuais removidos")
+    print("  e a versao mais recente sera baixada automaticamente.")
+    print()
+    if not _confirmar("Deseja atualizar o QuickWindowsX agora?"):
+        return
+    if not _confirmar("Confirmar atualizacao? O programa sera encerrado."):
+        return
+
+    if os.name != "nt":
+        print()
+        print("  [INFO] Disponivel apenas no Windows.")
+        input("  Pressione Enter para voltar...")
+        return
+
+    qwx_dir = Path(os.environ["TEMP"]) / "QuickWindowsX"
+    gti_dir = Path(os.environ["USERPROFILE"]) / "GTiSupport"
+    update  = gti_dir / "QWX_Update.bat"
+
+    gti_dir.mkdir(parents=True, exist_ok=True)
+    update.write_text(
+        "@echo off\r\n"
+        "echo Aguardando encerramento do QuickWindowsX...\r\n"
+        "timeout /t 5 /nobreak > nul\r\n"
+        ":retry\r\n"
+        f'rmdir /s /q "{qwx_dir}"\r\n'
+        f'if exist "{qwx_dir}" (\r\n'
+        "    timeout /t 2 /nobreak > nul\r\n"
+        "    goto retry\r\n"
+        ")\r\n"
+        'del /f /q "%~f0"\r\n'
+        'powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm qwx.gti1.com.br | iex"\r\n',
+        encoding="ascii",
+    )
+
+    subprocess.Popen(
+        ["cmd.exe", "/c", str(update)],
+        creationflags=subprocess.CREATE_NEW_CONSOLE,
+    )
+
+    print()
+    print("  Atualizando QuickWindowsX em instantes. Encerrando...")
+    sys.exit(0)
+
+
 def _recarregar_quickwindowsx():
     raise Recarregar()
 
@@ -563,6 +612,7 @@ def _documentacao_quickwindowsx():
 
 
 _ACOES_MENU_QWX = {
+    1: _atualizar_quickwindowsx,
     2: _deletar_quickwindowsx,
     3: _recarregar_quickwindowsx,
     4: _documentacao_quickwindowsx,
@@ -1208,6 +1258,7 @@ def rotinas():
 
     _MAPA = {
         # ── 1x: Menu QuickWindowsX ───────────────────────────────────────────
+        "11": ("Atualizar QuickWindowsX",                         _atualizar_quickwindowsx),
         "13": ("Recarregar QuickWindowsX",                        _recarregar_quickwindowsx),
         "14": ("Documentacao do QuickWindowsX",                   _documentacao_quickwindowsx),
         # ── 2x: Windows ──────────────────────────────────────────────────────
@@ -1309,7 +1360,7 @@ def rotinas():
 
         # ── Sessao 1 ──────────────────────────────────────────────────────────
         print(f"{_C}    1 = Menu QuickWindowsX{_X}")
-        _linha("11", "Atualizar QuickWindowsX",                         ok=False, indent=4)
+        _linha("11", "Atualizar QuickWindowsX",                         ok=True,  indent=4)
         _linha("12", "Deletar QuickWindowsX",                           ok=False, indent=4)
         _linha("13", "Recarregar QuickWindowsX",                        ok=True,  indent=4)
         _linha("14", "Documentacao do QuickWindowsX",                   ok=True,  indent=4)
