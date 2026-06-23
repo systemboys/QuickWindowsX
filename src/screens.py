@@ -581,8 +581,8 @@ def _atualizar_quickwindowsx():
         "    timeout /t 2 /nobreak > nul\r\n"
         "    goto retry\r\n"
         ")\r\n"
-        'del /f /q "%~f0"\r\n'
-        'powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm qwx.gti1.com.br | iex"\r\n',
+        'powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm qwx.gti1.com.br | iex"\r\n'
+        'del /f /q "%~f0"\r\n',
         encoding="ascii",
     )
 
