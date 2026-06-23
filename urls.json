@@ -1,0 +1,58 @@
+{
+    "Internet": {
+        "AnyDesk":                            "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/RemoteAccess/AnyDesk.exe",
+        "RustDesk":                           "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/RemoteAccess/RustDesk_Setup.exe",
+        "HopToDesk":                          "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/RemoteAccess/HopToDesk.exe",
+        "Microsoft Edge":                     "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/MicrosoftEdgeSetup.exe",
+        "Google Chrome":                      "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/ChromeSetup.exe",
+        "Google Earth Pro":                   "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/GoogleEarthProSetup.exe",
+        "Skype":                              "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/Skype-setup.exe",
+        "Opera":                              "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/OperaSetup.exe",
+        "Mozilla Firefox":                    "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/Firefox-Installer.exe",
+        "Real VNC Viewer":                    "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/VNC-Viewer-Windows.exe",
+        "Transmission":                       "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/Downloads/transmission-downloads.msi",
+        "IDM - Internet Download Manager":    "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/Downloads/Internet_Download_Manager.exe"
+    },
+    "UtilitiesForWindows": {
+        "Revo Uninstaller":                          "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/Revo_Unistaller_Setup.exe",
+        "Revo Uninstaller Portable":                 "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/RevoUninstallerPortable.zip",
+        "WinRAR":                                    "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/WinRAR.exe",
+        "WinZip":                                    "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/WinZip.exe",
+        "7-Zip":                                     "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/7z2301-x64.exe",
+        "Acrobat Reader DC":                         "https://ardownload2.adobe.com/pub/adobe/reader/win/AcrobatDC/2400220759/AcroRdrDC2400220759_pt_BR.exe",
+        "Foxit PDF Reader":                          "https://cdn78.foxitsoftware.com/product/reader/desktop/win/2024.2.2/FoxitPDFReader202422_L10N_Setup_Prom.exe",
+        "VLC Media Player":                          "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/VLCMediaPlayer.exe",
+        "Deep Freeze Standard":                      "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/Deep_Freeze.exe",
+        "Shadow Defender":                           "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/Shadow_Defender.exe",
+        "Cobian Backup":                             "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/Cobian_Backup_Setup.exe",
+        "MiniTool Partition Wizard v12 Instalacao":  "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/MiniTool-Partition-Wizard-v12-Installation.exe",
+        "MiniTool Partition Wizard v12 32bit Portable": "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/MiniTool-Partition-Wizard-v12-32bit-portable.zip",
+        "MiniTool Partition Wizard v12 64bit Portable": "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/MiniTool-Partition-Wizard-v12-64bit-portable.zip",
+        "WinToHDD":                                  "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/WinToHDD.exe",
+        "Hasleo WinToHDD Free":                      "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/WinToUSB_Free.exe",
+        "Rufus":                                     "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/rufus_setup.exe",
+        "DriverMax":                                 "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/DriverMax_setup.exe",
+        "Driver Booster Free":                       "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/DriverBooster_Setup.exe",
+        "CPU-Z":                                     "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/CPU-Z.exe",
+        "CPU-Z Portable":                            "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/CPU-Z.zip",
+        "Crystal Disk Info":                         "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/CrystalDiskInfo.exe",
+        "Crystal Disk Info Portable":                "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/CrystalDiskInfo.zip",
+        "SiberiaProg-CH341A":                        "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/SiberiaProg-CH341A_v1.40.0.0.exe",
+        "SiberiaProg-CH341A Portable":               "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/SiberiaProg-CH341A.zip",
+        "Open Hardware Monitor":                     "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/OpenHardwareMonitor.zip",
+        "Moo0 System Monitor":                       "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/Moo0_SystemMonitor_Portable.zip",
+        "WizTree":                                   "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/WizTree.exe",
+        "WizTree64":                                 "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/WizTree64.exe",
+        "Windows Update Activation":                 "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/UtilitiesForWindows/WindowsUpdateActivation.exe"
+    },
+    "OfficeSoftware": {
+        "Microsoft Office 365":                "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/OfficeSoftware/Microsoft_Office_365.exe",
+        "Microsoft Office 2016 a 2019":        "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/OfficeSoftware/Microsoft_Office_2016-2019.exe",
+        "Microsoft Office 2019 a 2021":        "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/OfficeSoftware/Microsoft_Office_2019-2021.exe"
+    },
+    "MicrosoftOperatingSystems": {
+        "Windows 10 22H2 Portugues x32":       "https://sipfhg.bl.files.1drv.com/y4mikgTb_9DUC1VrOHV47ev-jDFXDqPXBR5uhu6SxsuwgCsSFeK45-vkvJgzJhOYiKoNRaKM3CrYZb3aweF6flJ34GF-bs6gmHLIDmxvE-OgEMqpQijO92sDcrAuviNWevg-kpN_1DzrTeACYCyVTej7rrc8E7GeU3_d8F8bXNcsCtqdz5PnMxlogXq8qFJhuQ4QHzFqtffinwdMugrcOZOsFfMXDgZVj3UbHX2waW_70k?AVOverride=1",
+        "Windows 10 22H2 Portugues x64":       "https://onedrive.live.com/download?cid=FE54BD7CA85FC328&resid=FE54BD7CA85FC328!186780",
+        "Windows 11 24H2 Portugues x64":       "https://onedrive.live.com/download?cid=FE54BD7CA85FC328&resid=FE54BD7CA85FC328!186779"
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "QuickWindowsX",
+  "version": "2.0.0-dev",
+  "stage": "initial-menu",
+  "description": "Nova geração do QuickWindows iniciada do zero com menu em Python."
+}
