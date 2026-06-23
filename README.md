@@ -177,130 +177,130 @@ Copie as rotinas a executar no QuickWindowsX:
 > As versões **1.x.x** correspondem ao **QuickWindows** (base original em PowerShell/CMD).
 > A versão **2.0.0** marca o início do **QuickWindowsX** (reescrita em Python 3).
 
-- **v1.0.0** 2023-10-28 — Versão inicial, menu de instalações de programas para Windows.
-- **v1.0.1** 2023-10-31 — Correções de alguns bugs e alterações na documentação README.md.
-- **v1.1.0** 2023-10-31 — Exibição da versão do QuickWindows no terminal.
-- **v1.2.0** 2023-10-31 — Adicionada a Sessão Windows e algumas opções.
-- **v1.3.0** 2023-10-31 — Funcionalidade das opções Atualizar, Deletar e Recarregar o QuickWindows na Sessão Menu QuickWindows. Versão inicial do menu Session 2.
-- **v1.4.0** 2023-10-31 — Código PowerShell para atualizar softwares do Windows usando o comando winget.
-- **v1.5.0** 2023-10-31 — Script para instalar o Winget via PowerShell.
-- **v1.6.0** 2023-10-31 — Sessão Internet, Instalação de AnyDesk.
-- **v1.7.0** 2023-11-01 — Versão inicial, Sessão de Redes para opções relacionadas à redes.
-- **v1.8.0** 2023-11-01 — Opção para obter IP público na Sessão de Redes.
-- **v1.9.0** 2023-11-01 — Opção para obter IP local na Sessão de Redes.
-- **v1.10.0** 2023-11-01 — Opção para obter a rota de IP até a Google.com.
-- **v1.10.1** 2023-11-01 — Correção da verificação da existência do AnyDesk no Windows na sessão Internet.
-- **v1.11.0** 2023-11-01 — Execução Interativa de Comandos no PowerShell.
-- **v1.12.0** 2023-11-01 — Script PowerShell que ao informar um domínio retorna a rota da conexão na sessão Redes.
-- **v1.12.1** 2023-11-01 — Correção na linha de comando que apaga o arquivo de instalação do AnyDesk baixado.
-- **v1.13.0** 2023-11-11 — Versão inicial, opção para atualizar o PowerShell na sessão Windows.
-- **v1.14.0** 2023-11-11 — Opção para instalar o Microsoft Edge na sessão Internet.
-- **v1.15.0** 2023-11-11 — Opção para instalar o Google Chrome na sessão Internet.
-- **v1.15.1** 2023-11-12 — Correção: reescrito o script para baixar e executar o instalador do Microsoft Edge.
-- **v1.16.0** 2023-11-12 — Opção para instalar o Google Earth Pro na sessão Internet.
-- **v1.16.1** 2023-11-13 — Renomeadas as extensões dos arquivos .bat para .cmd.
-- **v1.17.0** 2023-11-13 — Opção para instalar o Skype na sessão Internet.
-- **v1.18.0** 2023-11-13 — Opção para instalar o navegador Opera na sessão Internet.
-- **v1.19.0** 2023-11-13 — Opção para instalar o navegador Mozilla Firefox na sessão Internet.
-- **v1.20.0** 2023-11-13 — Opção para instalar o visualizador Real VNC Viewer na sessão Internet.
-- **v1.21.0** 2023-11-14 — Menu de acesso rápido a funcionalidades do Windows na sessão Windows.
-- **v1.22.0** 2023-11-29 — Sessão Utilitários para Windows com instaladores diversos.
-- **v1.22.1** 2023-11-29 — A opção Instalar AnyDesk na sessão Internet foi renomeada para Softwares de Acesso Remoto.
-- **v1.23.0** 2023-11-29 — Script de Interação: Janela de Comando Interativa para Execução de Comandos.
-- **v1.24.0** 2023-11-30 — Opção para instalação de WinZip na sessão Utilitários para Windows.
-- **v1.25.0** 2023-11-30 — Sessão Software de congelamento do sistema concluída.
-- **v1.26.0** 2023-11-30 — Nova página para sessão Windows / Acesso rápido às Configurações (Page 1 e Page 2).
-- **v1.27.0** 2023-11-30 — Opção para abrir Gerenciador de Arquivos com endereço específico na sessão Windows / Configurações / página 2.
-- **v1.28.0** 2023-11-30 — Opção para instalação de Microsoft Office 2019 a 2021 na sessão Softwares para Escritório.
-- **v1.29.0** 2023-11-30 — Opção para Configurações do Windows na sessão Windows / Acesso rápido às Configurações.
-- **v1.30.0** 2023-12-01 — Sessão Downloads dentro da sessão Windows e opção para instalação do Internet Download Manager.
-- **v1.31.0** 2023-12-01 — Opção para Gerenciador de Tarefas do Windows na sessão Windows.
-- **v1.32.0** 2023-12-02 — Opção para instalação de Microsoft Office 365 na sessão Softwares para Escritório.
-- **v1.33.0** 2023-12-05 — Opção para agendar desligamento automático na sessão Windows.
-- **v1.33.1** 2023-12-06 — Removidas as linhas de URL do GitHub desnecessárias.
-- **v1.33.2** 2023-12-06 — Informado o tamanho dos executáveis nos arquivos PS1.
-- **v1.34.0** 2023-12-06 — Opção para instalar o Hasleo WinToHDD Free na sessão Utilitários para Windows.
-- **v1.35.0** 2023-12-08 — Todos os downloads agora exibem barra de progresso via Start-BitsTransfer.
-- **v1.36.0** 2023-12-10 — Opção para informar uma URL e iniciar download direto via PowerShell na sessão Internet / Downloads.
-- **v1.37.0** 2023-12-11 — Versão inicial das opções para baixar os Sistemas Operacionais da Microsoft.
-- **v1.38.0** 2023-12-13 — Emitir sequência de Beeps após downloads das ISOs dos sistemas operacionais.
-- **v1.38.1** 2023-12-14 — Ajuste na logo GTi e no nome GLOBAL TEC Informática da tela inicial.
-- **v1.39.0** 2023-12-16 — Todos os downloads modificados para emitir uma sequência de Beeps ao concluir.
-- **v1.40.0** 2023-12-25 — Opção para instalação de Rufus na sessão Utilitários para Windows.
-- **v1.40.1** 2023-12-28 — Ajuste na execução do WinToHDD e correção do caminho do executável do AnyDesk.
-- **v1.41.0** 2023-12-29, Sandro de Souza Silva — Opção para instalação de DriverMax na sessão Utilitários para Windows.
-- **v1.41.1** 2023-12-29 — Modificação onde o PowerShell pergunta o local para salvar o instalador do DriverMax.
-- **v1.42.0** 2024-01-08 — Comando para mudar a cor do plano de fundo do Windows PowerShell.
-- **v1.43.0** 2024-01-14 — Opção para executar Opções de pastas na sessão Windows / Acesso rápido às Configurações.
-- **v1.44.0** 2024-01-15 — Opções para limpar o Spooler de Impressão e limpar Arquivos Temporários na sessão Utilitários para Windows.
-- **v1.45.0** 2024-01-18 — Verificação se o PowerShell está sendo executado como administrador no menu.ps1.
-- **v1.46.0** 2024-01-19 — Exibição da quantidade de arquivos temporários apagados na sessão Utilitários para Windows.
-- **v1.46.1** 2024-01-20 — Correção do nome do arquivo .ps1 que baixa e executa o Revo Uninstaller.
-- **v1.47.0** 2024-01-20 — Versão inicial da sessão Software de gerenciamento de partições.
-- **v1.48.0** 2024-01-25 — Opção para instalação de 7-Zip na sessão Utilitários para Windows / Compactadores.
-- **v1.49.0** 2024-01-25 — Opção para instalação de Foxit PDF Reader na sessão Utilitários para Windows / Leitores de PDF.
-- **v1.50.0** 2024-02-03 — Opção para Compressão de arquivos / PowerShell Backup Automático (.zip) na sessão Utilitários para Windows.
-- **v1.51.0** 2024-02-04 — Opção para Informações do Sistema com PowerShell na sessão Windows / Acesso rápido às Configurações.
-- **v1.52.0** 2024-02-08 — Opção para baixar o HopToDesk na sessão Internet / Acesso Remoto.
-- **v1.53.0** 2024-02-12 — Opção para instalação de Driver Booster Free na sessão Utilitários para Windows.
-- **v1.54.0** 2024-02-12 — Opção para instalação de CPU-Z na sessão Utilitários para Windows.
-- **v1.55.0** 2024-02-21 — Opção para instalação de Cobian Backup na sessão Utilitários para Windows / Backup e Restauração.
-- **v1.55.1** 2024-03-08 — Condição com chave para escolher qual comando executar para atualizar o PowerShell na sessão Windows.
-- **v1.56.0** 2024-03-14 — Opção para execução de Rotinas (múltiplas ações em lote).
-- **v1.56.1** 2024-03-14 — Correção do nome Rufus (estava escrito Rufos) na sessão de utilitários.
-- **v1.57.0** 2024-03-21 — Opção para instalação do Crystal Disk Info na sessão Utilitários para Windows.
-- **v1.58.0** 2024-03-21 — Download e execução de CPU-Z Portable em Utilitários para Windows.
-- **v1.59.0** 2024-03-24 — Windows Update Activation e Revo Uninstaller Portable na sessão Utilitários para Windows. Ícone de execução criado na Área de trabalho.
-- **v1.60.0** 2024-03-29 — Battery Report na sessão Utilitários para Windows.
-- **v1.61.0** 2024-03-31 — Opção Reset AnyDesk na sessão Internet / Acesso Remoto.
-- **v1.62.0** 2024-04-11 — Opção para baixar e instalar o SiberiaProg-CH341A, programa de gravação de EPROM.
-- **v1.63.0** 2024-04-14 — Criação de dois atalhos na Área de trabalho do Windows: Desligar e Reiniciar.
-- **v1.64.0** 2024-04-16 — Opção para Gerenciador de Energia (Desligar ou Reiniciar) na sessão Windows.
-- **v1.65.0** 2024-04-17 — Criação dos atalhos dos aplicativos Microsoft Office na Área de trabalho do Windows.
-- **v1.65.1** 2024-04-18 — Ajuste da lista de rotinas para melhor visualização.
-- **v1.65.2** 2024-06-14 — Ajuste na largura da janela do terminal Windows PowerShell para 120 colunas.
-- **v1.66.0** 2024-06-16 — Configurações centralizadas no arquivo config.json no diretório raiz.
-- **v1.66.1** 2024-06-17 — Correção de bug onde config.json não era encontrado quando executado de outro local.
-- **v1.67.0** 2024-06-17 — Novo comando para atualização do PowerShell.
-- **v1.68.0** 2024-06-26 — Instalação silenciosa do Git via Winget.
-- **v1.69.0** 2024-06-27 — Os recursos do Windows passaram a ser executados por arquivo .ps1 dedicado.
-- **v1.70.0** 2024-06-30 — Definição do título da janela do Prompt a partir do config.json.
-- **v1.70.1** 2024-07-03 — Correção na remoção do instalador do Git no diretório Temp.
-- **v1.70.2** 2024-07-05 — Download do instalador via BitsTransfer e instalação silenciosa do Git.
-- **v1.71.0** 2024-07-06 — Abertura do Gerenciador de Tarefas para monitorar o desempenho do download.
-- **v1.71.1** 2024-07-06 — Correção das linhas que apagam os instaladores do Office após instalação.
-- **v1.71.2** 2024-07-11 — Ajuste na remoção do arquivo baixado em Temp com verificação de existência.
-- **v1.71.3** 2024-07-12 — Melhoria na instalação do Git eliminando o método via winget.
-- **v1.72.0** 2024-07-12 — Função que cria e registra logs do sistema em GTiSupport.
-- **v1.73.0** 2024-07-24 — Opção para baixar e executar o Open Hardware Monitor na sessão Utilitários para Windows.
-- **v1.73.1** 2024-07-24 — Ajuste para finalização dos processos do Adobe no PowerShell antes de continuação do script.
-- **v1.73.2** 2024-07-24 — Atualização do arquivo de instalação do Adobe para a versão do Windows 10.
-- **v1.73.3** 2024-07-24 — Correção de erro no final da instalação do Git no arquivo menu.ps1.
-- **v1.74.0** 2024-07-26 — Função para simular a exibição de uma linha com status OK no processo de instalação.
-- **v1.74.1** 2024-07-26 — Correção de bug após instalação do Git onde o PowerShell precisava ser reinicializado.
-- **v1.75.0** 2024-07-28 — Registro de logs em todos os arquivos de execução do QuickWindows.
-- **v1.75.1** 2024-07-28 — Correção de bugs nos níveis de chamada do arquivo de função de logs.
-- **v1.76.0** 2024-07-28 — Chave para habilitar ou desabilitar a execução do software de acesso remoto.
-- **v1.76.1** 2024-07-29 — Ajustes no tamanho da janela e no estreitamento das colunas da tabela de rotinas.
-- **v1.77.0** 2024-07-30 — Inclusão das opções da sessão de Redes nas Rotinas.
-- **v1.78.0** 2024-07-31 — Arquivo JSON centralizado para todas as URLs dos pacotes.
-- **v1.78.1** 2024-07-31 — Remoção do trecho que imprimia no terminal a informação de logs criados.
-- **v1.78.2** 2024-08-01 — Chamada das URLs do JSON nos utilitários que estavam faltando.
-- **v1.78.3** 2024-08-02 — Correção da URL para download do MiniTool Partition Wizard.
-- **v1.79.0** 2024-08-06 — Opção para download e execução do Moo0 System Monitor Portable.
-- **v1.80.0** 2024-08-12 — Opção para reiniciar e entrar na BIOS da placa-mãe.
-- **v1.81.0** 2024-08-15 — Verificação e finalização do processo SystemMonitor64 se estiver em execução.
-- **v1.81.1** 2024-08-15 — Ajustes no código do menu.ps1: linha comentada e textos traduzidos.
-- **v1.81.2** 2024-08-15 — Ajustes nas linhas que contêm o trecho %~dp0Package_Installers.
-- **v1.81.3** 2024-08-20 — Resolvido o método de download e execução do script do QuickWindows.
-- **v1.82.0** 2024-08-20 — Opção para abrir o README do QuickWindows no repositório Git na sessão Menu QuickWindows.
-- **v1.82.1** 2024-08-28 — Verificação da existência do arquivo zip antes de apagar.
-- **v1.83.0** 2024-09-06 — Script de criação de atalhos para computadores remotos via AnyDesk na Área de trabalho.
-- **v1.83.1** 2024-09-06 — Correção das descrições das ISOs do Windows 10 e 11 Pro na sessão Sistemas Operacionais.
-- **v1.83.2** 2024-10-30 — Ajuste no reset do AnyDesk: sessões recentes e miniaturas de PCs remotos são preservadas.
-- **v1.83.3** 2025-03-08 — Atualização da URL do Google Earth Pro e remoção da instalação do Moo0 do processo de setup.
-- **v1.83.4** 2025-04-04 — Atualização dos links das ISOs Win10 22H2 x32v1, Win10 22H2 x64v1 e Win11 24H2 x64.
-- **v1.83.5** 2025-08-28 — Correções de erros no código.
-- **v1.84.0** 2025-09-09 — Opção para download e execução de WizTree e WizTree64.
 - **v2.1.0** 2026-06-23 — Instalador remoto `install.ps1` via `irm qwx.gti1.com.br | iex`: eleva para administrador, cria atalho **GTi Support QWX** na Área de Trabalho com ícone, baixa o repositório do GitHub e inicia o menu. Ícone `Images/QuickWindowsX.ico` adicionado. Removida definição de fundo preto de `setup.ps1`. Removido código ANSI dim de `boot.py` (renderizava azul no conhost do Windows).
 - **v2.0.0** 2026-06-23 — **QuickWindowsX**: reescrita completa em Python 3. Motor de menus orientado a dados (`_submenu`), instalador genérico único (`run_package.ps1`) para EXE/MSI/ZIP, URLs centralizadas em `urls.json`, config.json com título da janela e beeps, rotinas em lote com numeração por sessão, logs em `%USERPROFILE%\GTiSupport`, desligamento agendado polimórfico, sessão Redes, execução de comandos PowerShell, suporte a desenvolvimento em Linux.
+- **v1.84.0** 2025-09-09 — Opção para download e execução de WizTree e WizTree64.
+- **v1.83.5** 2025-08-28 — Correções de erros no código.
+- **v1.83.4** 2025-04-04 — Atualização dos links das ISOs Win10 22H2 x32v1, Win10 22H2 x64v1 e Win11 24H2 x64.
+- **v1.83.3** 2025-03-08 — Atualização da URL do Google Earth Pro e remoção da instalação do Moo0 do processo de setup.
+- **v1.83.2** 2024-10-30 — Ajuste no reset do AnyDesk: sessões recentes e miniaturas de PCs remotos são preservadas.
+- **v1.83.1** 2024-09-06 — Correção das descrições das ISOs do Windows 10 e 11 Pro na sessão Sistemas Operacionais.
+- **v1.83.0** 2024-09-06 — Script de criação de atalhos para computadores remotos via AnyDesk na Área de trabalho.
+- **v1.82.1** 2024-08-28 — Verificação da existência do arquivo zip antes de apagar.
+- **v1.82.0** 2024-08-20 — Opção para abrir o README do QuickWindows no repositório Git na sessão Menu QuickWindows.
+- **v1.81.3** 2024-08-20 — Resolvido o método de download e execução do script do QuickWindows.
+- **v1.81.2** 2024-08-15 — Ajustes nas linhas que contêm o trecho %~dp0Package_Installers.
+- **v1.81.1** 2024-08-15 — Ajustes no código do menu.ps1: linha comentada e textos traduzidos.
+- **v1.81.0** 2024-08-15 — Verificação e finalização do processo SystemMonitor64 se estiver em execução.
+- **v1.80.0** 2024-08-12 — Opção para reiniciar e entrar na BIOS da placa-mãe.
+- **v1.79.0** 2024-08-06 — Opção para download e execução do Moo0 System Monitor Portable.
+- **v1.78.3** 2024-08-02 — Correção da URL para download do MiniTool Partition Wizard.
+- **v1.78.2** 2024-08-01 — Chamada das URLs do JSON nos utilitários que estavam faltando.
+- **v1.78.1** 2024-07-31 — Remoção do trecho que imprimia no terminal a informação de logs criados.
+- **v1.78.0** 2024-07-31 — Arquivo JSON centralizado para todas as URLs dos pacotes.
+- **v1.77.0** 2024-07-30 — Inclusão das opções da sessão de Redes nas Rotinas.
+- **v1.76.1** 2024-07-29 — Ajustes no tamanho da janela e no estreitamento das colunas da tabela de rotinas.
+- **v1.76.0** 2024-07-28 — Chave para habilitar ou desabilitar a execução do software de acesso remoto.
+- **v1.75.1** 2024-07-28 — Correção de bugs nos níveis de chamada do arquivo de função de logs.
+- **v1.75.0** 2024-07-28 — Registro de logs em todos os arquivos de execução do QuickWindows.
+- **v1.74.1** 2024-07-26 — Correção de bug após instalação do Git onde o PowerShell precisava ser reinicializado.
+- **v1.74.0** 2024-07-26 — Função para simular a exibição de uma linha com status OK no processo de instalação.
+- **v1.73.3** 2024-07-24 — Correção de erro no final da instalação do Git no arquivo menu.ps1.
+- **v1.73.2** 2024-07-24 — Atualização do arquivo de instalação do Adobe para a versão do Windows 10.
+- **v1.73.1** 2024-07-24 — Ajuste para finalização dos processos do Adobe no PowerShell antes de continuação do script.
+- **v1.73.0** 2024-07-24 — Opção para baixar e executar o Open Hardware Monitor na sessão Utilitários para Windows.
+- **v1.72.0** 2024-07-12 — Função que cria e registra logs do sistema em GTiSupport.
+- **v1.71.3** 2024-07-12 — Melhoria na instalação do Git eliminando o método via winget.
+- **v1.71.2** 2024-07-11 — Ajuste na remoção do arquivo baixado em Temp com verificação de existência.
+- **v1.71.1** 2024-07-06 — Correção das linhas que apagam os instaladores do Office após instalação.
+- **v1.71.0** 2024-07-06 — Abertura do Gerenciador de Tarefas para monitorar o desempenho do download.
+- **v1.70.2** 2024-07-05 — Download do instalador via BitsTransfer e instalação silenciosa do Git.
+- **v1.70.1** 2024-07-03 — Correção na remoção do instalador do Git no diretório Temp.
+- **v1.70.0** 2024-06-30 — Definição do título da janela do Prompt a partir do config.json.
+- **v1.69.0** 2024-06-27 — Os recursos do Windows passaram a ser executados por arquivo .ps1 dedicado.
+- **v1.68.0** 2024-06-26 — Instalação silenciosa do Git via Winget.
+- **v1.67.0** 2024-06-17 — Novo comando para atualização do PowerShell.
+- **v1.66.1** 2024-06-17 — Correção de bug onde config.json não era encontrado quando executado de outro local.
+- **v1.66.0** 2024-06-16 — Configurações centralizadas no arquivo config.json no diretório raiz.
+- **v1.65.2** 2024-06-14 — Ajuste na largura da janela do terminal Windows PowerShell para 120 colunas.
+- **v1.65.1** 2024-04-18 — Ajuste da lista de rotinas para melhor visualização.
+- **v1.65.0** 2024-04-17 — Criação dos atalhos dos aplicativos Microsoft Office na Área de trabalho do Windows.
+- **v1.64.0** 2024-04-16 — Opção para Gerenciador de Energia (Desligar ou Reiniciar) na sessão Windows.
+- **v1.63.0** 2024-04-14 — Criação de dois atalhos na Área de trabalho do Windows: Desligar e Reiniciar.
+- **v1.62.0** 2024-04-11 — Opção para baixar e instalar o SiberiaProg-CH341A, programa de gravação de EPROM.
+- **v1.61.0** 2024-03-31 — Opção Reset AnyDesk na sessão Internet / Acesso Remoto.
+- **v1.60.0** 2024-03-29 — Battery Report na sessão Utilitários para Windows.
+- **v1.59.0** 2024-03-24 — Windows Update Activation e Revo Uninstaller Portable na sessão Utilitários para Windows. Ícone de execução criado na Área de trabalho.
+- **v1.58.0** 2024-03-21 — Download e execução de CPU-Z Portable em Utilitários para Windows.
+- **v1.57.0** 2024-03-21 — Opção para instalação do Crystal Disk Info na sessão Utilitários para Windows.
+- **v1.56.1** 2024-03-14 — Correção do nome Rufus (estava escrito Rufos) na sessão de utilitários.
+- **v1.56.0** 2024-03-14 — Opção para execução de Rotinas (múltiplas ações em lote).
+- **v1.55.1** 2024-03-08 — Condição com chave para escolher qual comando executar para atualizar o PowerShell na sessão Windows.
+- **v1.55.0** 2024-02-21 — Opção para instalação de Cobian Backup na sessão Utilitários para Windows / Backup e Restauração.
+- **v1.54.0** 2024-02-12 — Opção para instalação de CPU-Z na sessão Utilitários para Windows.
+- **v1.53.0** 2024-02-12 — Opção para instalação de Driver Booster Free na sessão Utilitários para Windows.
+- **v1.52.0** 2024-02-08 — Opção para baixar o HopToDesk na sessão Internet / Acesso Remoto.
+- **v1.51.0** 2024-02-04 — Opção para Informações do Sistema com PowerShell na sessão Windows / Acesso rápido às Configurações.
+- **v1.50.0** 2024-02-03 — Opção para Compressão de arquivos / PowerShell Backup Automático (.zip) na sessão Utilitários para Windows.
+- **v1.49.0** 2024-01-25 — Opção para instalação de Foxit PDF Reader na sessão Utilitários para Windows / Leitores de PDF.
+- **v1.48.0** 2024-01-25 — Opção para instalação de 7-Zip na sessão Utilitários para Windows / Compactadores.
+- **v1.47.0** 2024-01-20 — Versão inicial da sessão Software de gerenciamento de partições.
+- **v1.46.1** 2024-01-20 — Correção do nome do arquivo .ps1 que baixa e executa o Revo Uninstaller.
+- **v1.46.0** 2024-01-19 — Exibição da quantidade de arquivos temporários apagados na sessão Utilitários para Windows.
+- **v1.45.0** 2024-01-18 — Verificação se o PowerShell está sendo executado como administrador no menu.ps1.
+- **v1.44.0** 2024-01-15 — Opções para limpar o Spooler de Impressão e limpar Arquivos Temporários na sessão Utilitários para Windows.
+- **v1.43.0** 2024-01-14 — Opção para executar Opções de pastas na sessão Windows / Acesso rápido às Configurações.
+- **v1.42.0** 2024-01-08 — Comando para mudar a cor do plano de fundo do Windows PowerShell.
+- **v1.41.1** 2023-12-29 — Modificação onde o PowerShell pergunta o local para salvar o instalador do DriverMax.
+- **v1.41.0** 2023-12-29, Sandro de Souza Silva — Opção para instalação de DriverMax na sessão Utilitários para Windows.
+- **v1.40.1** 2023-12-28 — Ajuste na execução do WinToHDD e correção do caminho do executável do AnyDesk.
+- **v1.40.0** 2023-12-25 — Opção para instalação de Rufus na sessão Utilitários para Windows.
+- **v1.39.0** 2023-12-16 — Todos os downloads modificados para emitir uma sequência de Beeps ao concluir.
+- **v1.38.1** 2023-12-14 — Ajuste na logo GTi e no nome GLOBAL TEC Informática da tela inicial.
+- **v1.38.0** 2023-12-13 — Emitir sequência de Beeps após downloads das ISOs dos sistemas operacionais.
+- **v1.37.0** 2023-12-11 — Versão inicial das opções para baixar os Sistemas Operacionais da Microsoft.
+- **v1.36.0** 2023-12-10 — Opção para informar uma URL e iniciar download direto via PowerShell na sessão Internet / Downloads.
+- **v1.35.0** 2023-12-08 — Todos os downloads agora exibem barra de progresso via Start-BitsTransfer.
+- **v1.34.0** 2023-12-06 — Opção para instalar o Hasleo WinToHDD Free na sessão Utilitários para Windows.
+- **v1.33.2** 2023-12-06 — Informado o tamanho dos executáveis nos arquivos PS1.
+- **v1.33.1** 2023-12-06 — Removidas as linhas de URL do GitHub desnecessárias.
+- **v1.33.0** 2023-12-05 — Opção para agendar desligamento automático na sessão Windows.
+- **v1.32.0** 2023-12-02 — Opção para instalação de Microsoft Office 365 na sessão Softwares para Escritório.
+- **v1.31.0** 2023-12-01 — Opção para Gerenciador de Tarefas do Windows na sessão Windows.
+- **v1.30.0** 2023-12-01 — Sessão Downloads dentro da sessão Windows e opção para instalação do Internet Download Manager.
+- **v1.29.0** 2023-11-30 — Opção para Configurações do Windows na sessão Windows / Acesso rápido às Configurações.
+- **v1.28.0** 2023-11-30 — Opção para instalação de Microsoft Office 2019 a 2021 na sessão Softwares para Escritório.
+- **v1.27.0** 2023-11-30 — Opção para abrir Gerenciador de Arquivos com endereço específico na sessão Windows / Configurações / página 2.
+- **v1.26.0** 2023-11-30 — Nova página para sessão Windows / Acesso rápido às Configurações (Page 1 e Page 2).
+- **v1.25.0** 2023-11-30 — Sessão Software de congelamento do sistema concluída.
+- **v1.24.0** 2023-11-30 — Opção para instalação de WinZip na sessão Utilitários para Windows.
+- **v1.23.0** 2023-11-29 — Script de Interação: Janela de Comando Interativa para Execução de Comandos.
+- **v1.22.1** 2023-11-29 — A opção Instalar AnyDesk na sessão Internet foi renomeada para Softwares de Acesso Remoto.
+- **v1.22.0** 2023-11-29 — Sessão Utilitários para Windows com instaladores diversos.
+- **v1.21.0** 2023-11-14 — Menu de acesso rápido a funcionalidades do Windows na sessão Windows.
+- **v1.20.0** 2023-11-13 — Opção para instalar o visualizador Real VNC Viewer na sessão Internet.
+- **v1.19.0** 2023-11-13 — Opção para instalar o navegador Mozilla Firefox na sessão Internet.
+- **v1.18.0** 2023-11-13 — Opção para instalar o navegador Opera na sessão Internet.
+- **v1.17.0** 2023-11-13 — Opção para instalar o Skype na sessão Internet.
+- **v1.16.1** 2023-11-13 — Renomeadas as extensões dos arquivos .bat para .cmd.
+- **v1.16.0** 2023-11-12 — Opção para instalar o Google Earth Pro na sessão Internet.
+- **v1.15.1** 2023-11-12 — Correção: reescrito o script para baixar e executar o instalador do Microsoft Edge.
+- **v1.15.0** 2023-11-11 — Opção para instalar o Google Chrome na sessão Internet.
+- **v1.14.0** 2023-11-11 — Opção para instalar o Microsoft Edge na sessão Internet.
+- **v1.13.0** 2023-11-11 — Versão inicial, opção para atualizar o PowerShell na sessão Windows.
+- **v1.12.1** 2023-11-01 — Correção na linha de comando que apaga o arquivo de instalação do AnyDesk baixado.
+- **v1.12.0** 2023-11-01 — Script PowerShell que ao informar um domínio retorna a rota da conexão na sessão Redes.
+- **v1.11.0** 2023-11-01 — Execução Interativa de Comandos no PowerShell.
+- **v1.10.1** 2023-11-01 — Correção da verificação da existência do AnyDesk no Windows na sessão Internet.
+- **v1.10.0** 2023-11-01 — Opção para obter a rota de IP até a Google.com.
+- **v1.9.0** 2023-11-01 — Opção para obter IP local na Sessão de Redes.
+- **v1.8.0** 2023-11-01 — Opção para obter IP público na Sessão de Redes.
+- **v1.7.0** 2023-11-01 — Versão inicial, Sessão de Redes para opções relacionadas à redes.
+- **v1.6.0** 2023-10-31 — Sessão Internet, Instalação de AnyDesk.
+- **v1.5.0** 2023-10-31 — Script para instalar o Winget via PowerShell.
+- **v1.4.0** 2023-10-31 — Código PowerShell para atualizar softwares do Windows usando o comando winget.
+- **v1.3.0** 2023-10-31 — Funcionalidade das opções Atualizar, Deletar e Recarregar o QuickWindows na Sessão Menu QuickWindows. Versão inicial do menu Session 2.
+- **v1.2.0** 2023-10-31 — Adicionada a Sessão Windows e algumas opções.
+- **v1.1.0** 2023-10-31 — Exibição da versão do QuickWindows no terminal.
+- **v1.0.1** 2023-10-31 — Correções de alguns bugs e alterações na documentação README.md.
+- **v1.0.0** 2023-10-28 — Versão inicial, menu de instalações de programas para Windows.
