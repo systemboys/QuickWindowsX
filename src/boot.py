@@ -23,6 +23,13 @@ _DIM    = "\033[2m"
 
 ROOT = Path(__file__).resolve().parent.parent
 
+_version_cache: dict = {}
+
+
+def get_update_info():
+    """Retorna (local_ver, remote_ver) da verificação feita no boot."""
+    return _version_cache.get("local"), _version_cache.get("remote")
+
 
 def _ok(msg):
     print(f"[ {_GREEN}OK{_RESET} ] {msg}")
@@ -75,6 +82,8 @@ def executar():
     # ── Inicializacao do sistema ──────────────────────────────────────────────
     _starting("QuickWindowsX")
     local_ver, remote_ver = _check_version()
+    _version_cache["local"]  = local_ver
+    _version_cache["remote"] = remote_ver
     if remote_ver and remote_ver != local_ver:
         print(f"[ {_YELLOW}NOVO{_RESET} ] v{remote_ver} disponivel! (instalada: v{local_ver}) — use '1 > 1' para atualizar.")
         time.sleep(random.uniform(0.07, 0.22))

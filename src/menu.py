@@ -2,6 +2,10 @@ import os
 import json
 from pathlib import Path
 from src import screens
+from src.boot import get_update_info
+
+_YELLOW = "\033[93m"
+_RESET  = "\033[0m"
 
 _OPCOES = [
     ( 0, "Sair"),
@@ -42,11 +46,13 @@ def _limpar():
     os.system("cls" if os.name == "nt" else "clear")
 
 
-def _cabecalho(versao):
+def _cabecalho(versao, aviso=None):
     print()
     print("  ========================================")
     print("          QuickWindowsX")
     print(f"          Versao: {versao}")
+    if aviso:
+        print(f"  {aviso}")
     print("  ========================================")
     print()
 
@@ -60,16 +66,21 @@ def _opcoes():
 def rodar():
     versao = _versao()
 
+    local_ver, remote_ver = get_update_info()
+    aviso = None
+    if remote_ver and remote_ver != local_ver:
+        aviso = f"{_YELLOW}[ NOVO ] v{remote_ver} disponivel! Use '1 > 1' para atualizar.{_RESET}"
+
     while True:
         _limpar()
-        _cabecalho(versao)
+        _cabecalho(versao, aviso)
         _opcoes()
 
         entrada = input("  Opcao: ").strip()
 
         if not entrada.isdigit():
             _limpar()
-            _cabecalho(versao)
+            _cabecalho(versao, aviso)
             _opcoes()
             print("  Opcao invalida. Tente novamente.")
             input("  Pressione Enter para continuar...")
@@ -86,7 +97,7 @@ def rodar():
 
         if escolha not in _ACOES:
             _limpar()
-            _cabecalho(versao)
+            _cabecalho(versao, aviso)
             _opcoes()
             print("  Opcao invalida. Tente novamente.")
             input("  Pressione Enter para continuar...")
