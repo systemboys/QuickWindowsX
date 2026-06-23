@@ -25,6 +25,9 @@
 # v1.1.2 2026-06-23, Marcos Aurélio:
 #   - Remoção defensiva de $qwxDir antes do Rename-Item evita erro "arquivo já existente"
 #     quando o diretório antigo não foi removido completamente pelo instalador anterior.
+# v1.1.3 2026-06-23, Marcos Aurélio:
+#   - QWX agora abre em janela cmd.exe compacta via Start-Process, em vez de herdar
+#     a janela grande do Windows PowerShell onde o instalador foi executado.
 #
 # Licença: GPL.
 
@@ -153,10 +156,9 @@ try {
         }
     }
 
-    # ── Iniciar QuickWindowsX na janela atual (preserva o fundo do terminal) ──
-    Write-QWXLog "Iniciando QuickWindowsX via setup.ps1."
-    Set-Location $qwxDir
-    & "$qwxDir\setup.ps1"
+    # ── Iniciar QuickWindowsX em janela cmd.exe (compacta, sem herdar PS grande) ──
+    Write-QWXLog "Iniciando QuickWindowsX via cmd.exe + setup.ps1."
+    Start-Process cmd.exe -ArgumentList "/c powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$qwxDir\setup.ps1`""
 
 } catch {
     Write-Host ""
