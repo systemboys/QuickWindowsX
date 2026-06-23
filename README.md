@@ -2,7 +2,7 @@
 
 Menu interativo para agilizar instalações, rotinas e configurações no Windows durante formatação ou manutenção de computadores.
 
-Versão atual: **2.0.0-dev**
+Versão atual: **2.1.0**
 
 ---
 
@@ -52,6 +52,20 @@ irm qwx.gti1.com.br | iex
 Invoke-WebRequest -Uri "https://qwx.gti1.com.br" -OutFile "$env:TEMP\install.ps1"
 & "$env:TEMP\install.ps1"
 ```
+
+### Hospedagem do `install.ps1` (Apache / cPanel)
+
+Para que `irm qwx.gti1.com.br | iex` funcione, o servidor Apache precisa servir `install.ps1` como índice padrão do diretório. Crie um arquivo `.htaccess` na raiz do diretório `qwx/` no hospedeiro com o seguinte conteúdo mínimo:
+
+```apache
+DirectoryIndex install.ps1
+```
+
+> **Como funciona:** sem essa diretiva, o Apache procura por `index.html`, `index.php` etc. e retorna 403 ou a lista do diretório quando nenhum é encontrado. Com `DirectoryIndex install.ps1`, uma requisição GET ao domínio raiz serve o script PowerShell — que é exatamente o que o `irm` espera receber.
+>
+> O cPanel costuma gerar automaticamente um bloco extra no `.htaccess` (handler de PHP via `mime_module`). Esse bloco **não é necessário** para o funcionamento do instalador; o único campo obrigatório é a linha `DirectoryIndex install.ps1`.
+>
+> O mesmo padrão é usado pelo QuickWindows: `public_html/qw/.htaccess` contém `DirectoryIndex menu.ps1`.
 
 ---
 
@@ -225,4 +239,5 @@ QuickWindowsX/
 - **v1.83.4** 2025-04-04 — Atualização dos links das ISOs Win10 22H2 x32v1, Win10 22H2 x64v1 e Win11 24H2 x64.
 - **v1.83.5** 2025-08-28 — Correções de erros no código.
 - **v1.84.0** 2025-09-09 — Opção para download e execução de WizTree e WizTree64.
+- **v2.1.0** 2026-06-23 — Instalador remoto `install.ps1` via `irm qwx.gti1.com.br | iex`: eleva para administrador, cria atalho **GTi Support QWX** na Área de Trabalho com ícone, baixa o repositório do GitHub e inicia o menu. Ícone `Images/QuickWindowsX.ico` adicionado. Removida definição de fundo preto de `setup.ps1`. Removido código ANSI dim de `boot.py` (renderizava azul no conhost do Windows).
 - **v2.0.0** 2026-06-23 — **QuickWindowsX**: reescrita completa em Python 3. Motor de menus orientado a dados (`_submenu`), instalador genérico único (`run_package.ps1`) para EXE/MSI/ZIP, URLs centralizadas em `urls.json`, config.json com título da janela e beeps, rotinas em lote com numeração por sessão, logs em `%USERPROFILE%\GTiSupport`, desligamento agendado polimórfico, sessão Redes, execução de comandos PowerShell, suporte a desenvolvimento em Linux.
