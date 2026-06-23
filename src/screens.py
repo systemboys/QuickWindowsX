@@ -524,8 +524,9 @@ def _deletar_quickwindowsx():
     gti_dir.mkdir(parents=True, exist_ok=True)
     cleanup.write_text(
         "@echo off\r\n"
+        'cd /d "%USERPROFILE%\\GTiSupport"\r\n'
         "timeout /t 5 /nobreak > nul\r\n"
-        f':retry\r\n'
+        ":retry\r\n"
         f'rmdir /s /q "{qwx_dir}"\r\n'
         f'if exist "{qwx_dir}" (\r\n'
         "    timeout /t 2 /nobreak > nul\r\n"
@@ -571,6 +572,7 @@ def _atualizar_quickwindowsx():
     gti_dir.mkdir(parents=True, exist_ok=True)
     update.write_text(
         "@echo off\r\n"
+        'cd /d "%USERPROFILE%\\GTiSupport"\r\n'
         "echo Aguardando encerramento do QuickWindowsX...\r\n"
         "timeout /t 5 /nobreak > nul\r\n"
         ":retry\r\n"
