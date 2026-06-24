@@ -2,7 +2,7 @@
 
 Menu interativo para agilizar instalações, rotinas e configurações no Windows durante formatação ou manutenção de computadores.
 
-Versão atual: **2.2.0**
+Versão atual: **2.3.0**
 
 [![Menu interativo QuickWindowsX](./Images/MenuQWX.png "Menu interativo QuickWindowsX")](#rotinas-para-instala%C3%A7%C3%B5es-padr%C3%A3o)
 
@@ -172,11 +172,48 @@ Copie as rotinas a executar no QuickWindowsX:
 
 ---
 
+## Senha de acesso
+
+O QuickWindowsX permite configurar uma senha de **6 dígitos numéricos** para proteger o acesso ao menu. Útil quando o atalho é deixado na Área de Trabalho após um serviço — evita que usuários leigos executem ações indevidas.
+
+### Configurar senha
+
+Na **primeira execução**, o QWX perguntará se você deseja ativar a proteção por senha. Você pode pular essa etapa e configurar depois pelo menu:
+
+```
+1 - Menu QuickWindows... > 5 - Gerenciar Senha de Acesso
+```
+
+### Alterar ou remover a senha
+
+Acesse o mesmo caminho acima. Para remover a senha, será solicitada a senha atual como confirmação.
+
+### Recuperação de senha (senha esquecida)
+
+A senha é armazenada (criptografada) no arquivo:
+
+```
+%USERPROFILE%\GTiSupport\qwx_auth.json
+```
+
+Abra esse arquivo com qualquer editor de texto e **apague o valor entre aspas** na linha `"senha"`, deixando-a assim:
+
+```json
+{
+  "senha": ""
+}
+```
+
+Salve o arquivo. Na próxima execução o QWX iniciará sem pedir senha.
+
+---
+
 ## Histórico de versões
 
 > As versões **1.x.x** correspondem ao **QuickWindows** (base original em PowerShell/CMD).
 > A versão **2.0.0** marca o início do **QuickWindowsX** (reescrita em Python 3).
 
+- **v2.3.0** 2026-06-24 — Protecao por senha de 6 digitos numericos: na primeira execucao o QWX oferece ativar a senha; em execucoes seguintes, se senha configurada, solicita autenticacao antes de exibir o menu (3 tentativas); gerenciador de senha em "Menu QuickWindows > Gerenciar Senha de Acesso" permite ativar, alterar ou remover a senha. Arquivo de senha armazenado em %USERPROFILE%\GTiSupport\qwx_auth.json (instrucoes de recuperacao no README). Modulo src/auth.py adicionado.
 - **v2.2.0** 2026-06-23 — Verificacao de atualizacao disponivel na inicializacao do boot e no cabecalho do menu principal: exibe aviso em amarelo quando ha versao mais recente no repositorio, com instrucao de como atualizar. Opcao "Deletar QuickWindowsX" agora remove tambem o atalho "GTi Support QWX" da Area de Trabalho apos a exclusao do diretorio.
 - **v2.1.0** 2026-06-23 — Instalador remoto `install.ps1` via `irm qwx.gti1.com.br | iex`: eleva para administrador, cria atalho **GTi Support QWX** na Área de Trabalho com ícone, baixa o repositório do GitHub e inicia o menu. Ícone `Images/QuickWindowsX.ico` adicionado. Removida definição de fundo preto de `setup.ps1`. Removido código ANSI dim de `boot.py` (renderizava azul no conhost do Windows).
 - **v2.0.0** 2026-06-23 — **QuickWindowsX**: reescrita completa em Python 3. Motor de menus orientado a dados (`_submenu`), instalador genérico único (`run_package.ps1`) para EXE/MSI/ZIP, URLs centralizadas em `urls.json`, config.json com título da janela e beeps, rotinas em lote com numeração por sessão, logs em `%USERPROFILE%\GTiSupport`, desligamento agendado polimórfico, sessão Redes, execução de comandos PowerShell, suporte a desenvolvimento em Linux.

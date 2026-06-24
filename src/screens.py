@@ -619,11 +619,106 @@ def _documentacao_quickwindowsx():
     input("  Pressione Enter para voltar...")
 
 
+def _gerenciar_senha():
+    from src import auth
+    from src.boot import _input_senha, _nova_senha_prompt
+
+    _G = "\033[92m"
+    _Y = "\033[93m"
+    _R = "\033[91m"
+    _X = "\033[0m"
+    SEP = "  ─────────────────────────────────────────────"
+
+    while True:
+        _clear()
+        print()
+        print("  === Gerenciar Senha de Acesso ===")
+        print()
+
+        if os.name != "nt":
+            print("  [INFO] Disponivel apenas no Windows.")
+            input("  Pressione Enter para voltar...")
+            return
+
+        ativo = auth.has_password()
+        status = f"{_G}[ ATIVA ]{_X}" if ativo else f"{_Y}[ DESATIVADA ]{_X}"
+        gti_path = Path(os.environ.get("USERPROFILE", "%USERPROFILE%")) / "GTiSupport" / "qwx_auth.json"
+        print(f"  Status : {status}")
+        print(f"  Arquivo: {gti_path}")
+        print()
+        print(SEP)
+
+        if ativo:
+            print(f"  {_G}1{_X} - Alterar senha")
+            print(f"  {_R}2{_X} - Remover protecao por senha")
+            print(f"  {_X}0{_X} - Voltar")
+        else:
+            print(f"  {_G}1{_X} - Ativar protecao por senha")
+            print(f"  {_X}0{_X} - Voltar")
+
+        print(SEP)
+        print()
+        op = input("  Opcao: ").strip()
+
+        if op == "0":
+            return
+
+        if op == "1" and not ativo:
+            # Adicionar nova senha
+            print()
+            senha = _nova_senha_prompt()
+            if senha:
+                auth.save(senha)
+                print()
+                print(f"  {_G}Senha ativada com sucesso!{_X}")
+                print("  O QWX solicitara a senha a cada inicializacao.")
+            else:
+                print()
+                print("  Operacao cancelada.")
+            input("  Pressione Enter para continuar...")
+
+        elif op == "1" and ativo:
+            # Alterar senha
+            print()
+            atual = _input_senha("  Senha atual: ")
+            if not auth.verify(atual):
+                print()
+                print(f"  {_R}Senha incorreta. Operacao cancelada.{_X}")
+                input("  Pressione Enter para continuar...")
+                continue
+            print()
+            nova = _nova_senha_prompt()
+            if nova:
+                auth.save(nova)
+                print()
+                print(f"  {_G}Senha alterada com sucesso!{_X}")
+            else:
+                print()
+                print("  Operacao cancelada.")
+            input("  Pressione Enter para continuar...")
+
+        elif op == "2" and ativo:
+            # Remover senha
+            print()
+            atual = _input_senha("  Digite a senha atual para confirmar a remocao: ")
+            if not auth.verify(atual):
+                print()
+                print(f"  {_R}Senha incorreta. Operacao cancelada.{_X}")
+                input("  Pressione Enter para continuar...")
+                continue
+            auth.clear()
+            print()
+            print(f"  {_Y}Protecao por senha removida.{_X}")
+            print("  O QWX sera iniciado sem solicitar senha.")
+            input("  Pressione Enter para continuar...")
+
+
 _ACOES_MENU_QWX = {
     1: _atualizar_quickwindowsx,
     2: _deletar_quickwindowsx,
     3: _recarregar_quickwindowsx,
     4: _documentacao_quickwindowsx,
+    5: _gerenciar_senha,
 }
 
 
@@ -1081,6 +1176,7 @@ def menu_quickwindows():
         "Deletar QuickWindows",
         "Recarregar QuickWindows",
         "Documentacao do QuickWindows",
+        "Gerenciar Senha de Acesso",
     ], _ACOES_MENU_QWX)
 
 
@@ -1316,6 +1412,7 @@ def rotinas():
         "11": ("Atualizar QuickWindowsX",                         _atualizar_quickwindowsx),
         "13": ("Recarregar QuickWindowsX",                        _recarregar_quickwindowsx),
         "14": ("Documentacao do QuickWindowsX",                   _documentacao_quickwindowsx),
+        "15": ("Gerenciar Senha de Acesso",                       _gerenciar_senha),
         # ── 2x: Windows ──────────────────────────────────────────────────────
         "21": ("Desligar o Windows",                              _desligar_windows),
         "22": ("Reiniciar o Windows",                             _reiniciar_windows),
@@ -1419,6 +1516,7 @@ def rotinas():
         _linha("12", "Deletar QuickWindowsX",                           ok=False, indent=4)
         _linha("13", "Recarregar QuickWindowsX",                        ok=True,  indent=4)
         _linha("14", "Documentacao do QuickWindowsX",                   ok=True,  indent=4)
+        _linha("15", "Gerenciar Senha de Acesso",                       ok=True,  indent=4)
         print(SEP)
 
         # ── Sessao 2 ──────────────────────────────────────────────────────────

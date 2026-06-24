@@ -101,11 +101,12 @@ def executar():
 
     # ── Modulos do sistema ────────────────────────────────────────────────────
     _starting("carregamento de modulos")
-    _check_file("src/__init__.py", "src/__init__.py")
-    _check_file("src/app.py",      "src/app.py")
-    _check_file("src/menu.py",     "src/menu.py")
-    _check_file("src/screens.py",  "src/screens.py")
-    _check_file("src/boot.py",       "src/boot.py")
+    _check_file("src/__init__.py",    "src/__init__.py")
+    _check_file("src/app.py",         "src/app.py")
+    _check_file("src/menu.py",        "src/menu.py")
+    _check_file("src/screens.py",     "src/screens.py")
+    _check_file("src/boot.py",        "src/boot.py")
+    _check_file("src/auth.py",        "src/auth.py")
     _check_file("src/exceptions.py",  "src/exceptions.py")
     _check_file("src/installer.py",   "src/installer.py")
     _check_file("src/run_package.ps1","src/run_package.ps1")
@@ -142,3 +143,91 @@ def executar():
     _ok("Todos os servicos iniciados.")
     print()
     time.sleep(0.3)
+
+    # ── Autenticacao ──────────────────────────────────────────────────────────
+    _handle_auth()
+
+
+def _input_senha(prompt: str) -> str:
+    """Lê senha sem eco no Windows; fallback para input() normal em outros sistemas."""
+    try:
+        import msvcrt
+        print(prompt, end="", flush=True)
+        chars = []
+        while True:
+            ch = msvcrt.getwch()
+            if ch in ("\r", "\n"):
+                print()
+                break
+            if ch == "\x08":  # backspace
+                if chars:
+                    chars.pop()
+                    print("\b \b", end="", flush=True)
+            elif ch == "\x03":  # ctrl+c
+                raise KeyboardInterrupt
+            else:
+                chars.append(ch)
+                print("*", end="", flush=True)
+        return "".join(chars)
+    except ImportError:
+        return input(prompt)
+
+
+def _nova_senha_prompt() -> str | None:
+    """Solicita e confirma nova senha de 6 dígitos. Retorna a senha ou None se cancelado."""
+    while True:
+        p1 = _input_senha("  Nova senha (6 digitos numericos): ")
+        if not p1:
+            return None
+        if not p1.isdigit() or len(p1) != 6:
+            _warn("A senha deve conter exatamente 6 digitos numericos.")
+            continue
+        p2 = _input_senha("  Confirmar senha: ")
+        if p1 != p2:
+            _warn("As senhas nao coincidem. Tente novamente.")
+            continue
+        return p1
+
+
+def _handle_auth():
+    """Gerencia autenticacao no boot: setup na primeira vez, prompt nas seguintes."""
+    if os.name != "nt":
+        return
+
+    from src import auth
+
+    if not auth.has_password():
+        print("  ─────────────────────────────────────────────")
+        print("  Deseja proteger o QWX com senha de 6 digitos?")
+        print("  (opcional — pressione Enter para pular)")
+        print("  ─────────────────────────────────────────────")
+        resp = input("  Ativar protecao por senha? (s/N): ").strip().lower()
+        if resp == "s":
+            senha = _nova_senha_prompt()
+            if senha:
+                auth.save(senha)
+                _ok("Senha configurada! O QWX solicitara a senha no proximo acesso.")
+            else:
+                _warn("Configuracao de senha cancelada.")
+        print()
+        return
+
+    # Senha ativa: solicitar acesso
+    print()
+    print("  ─────────────────────────────────────────────")
+    print("  QuickWindowsX esta protegido por senha.")
+    print("  ─────────────────────────────────────────────")
+    for tentativa in range(1, 4):
+        senha = _input_senha(f"  Senha ({tentativa}/3): ")
+        if auth.verify(senha):
+            _ok("Acesso autorizado.")
+            print()
+            return
+        restantes = 3 - tentativa
+        if restantes > 0:
+            _warn(f"Senha incorreta. Tentativas restantes: {restantes}")
+        else:
+            print()
+            _fail("Acesso negado. Encerrando o QuickWindowsX.")
+            print()
+            sys.exit(1)
