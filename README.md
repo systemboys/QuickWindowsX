@@ -2,7 +2,7 @@
 
 Menu interativo para agilizar instalações, rotinas e configurações no Windows durante formatação ou manutenção de computadores.
 
-Versão atual: **2.3.0**
+Versão atual: **2.4.0**
 
 [![Menu interativo QuickWindowsX](./Images/MenuQWX.png "Menu interativo QuickWindowsX")](#rotinas-para-instala%C3%A7%C3%B5es-padr%C3%A3o)
 
@@ -213,6 +213,7 @@ Salve o arquivo. Na próxima execução o QWX iniciará sem pedir senha.
 > As versões **1.x.x** correspondem ao **QuickWindows** (base original em PowerShell/CMD).
 > A versão **2.0.0** marca o início do **QuickWindowsX** (reescrita em Python 3).
 
+- **v2.4.0** 2026-06-24 — Sistema de log implementado em `src/logger.py`: todas as acoes executadas (submenus, rotinas em lote, inicializacao, eventos de autenticacao) sao registradas automaticamente em `%USERPROFILE%\GTiSupport\QWX_Log.txt` com timestamp no formato `yyyy/MM/dd HH:mm:ss`. Entradas inseridas sempre no topo do arquivo (mais recentes primeiro). Senha de protecao ampliada para aceitar letras, numeros e caracteres especiais (minimo 6 caracteres). Confirmacoes duplas de exclusao e atualizacao do QWX reduzidas para uma unica confirmacao.
 - **v2.3.0** 2026-06-24 — Protecao por senha de 6 digitos numericos: na primeira execucao o QWX oferece ativar a senha; em execucoes seguintes, se senha configurada, solicita autenticacao antes de exibir o menu (3 tentativas); gerenciador de senha em "Menu QuickWindows > Gerenciar Senha de Acesso" permite ativar, alterar ou remover a senha. Arquivo de senha armazenado em %USERPROFILE%\GTiSupport\qwx_auth.json (instrucoes de recuperacao no README). Modulo src/auth.py adicionado.
 - **v2.2.0** 2026-06-23 — Verificacao de atualizacao disponivel na inicializacao do boot e no cabecalho do menu principal: exibe aviso em amarelo quando ha versao mais recente no repositorio, com instrucao de como atualizar. Opcao "Deletar QuickWindowsX" agora remove tambem o atalho "GTi Support QWX" da Area de Trabalho apos a exclusao do diretorio.
 - **v2.1.0** 2026-06-23 — Instalador remoto `install.ps1` via `irm qwx.gti1.com.br | iex`: eleva para administrador, cria atalho **GTi Support QWX** na Área de Trabalho com ícone, baixa o repositório do GitHub e inicia o menu. Ícone `Images/QuickWindowsX.ico` adicionado. Removida definição de fundo preto de `setup.ps1`. Removido código ANSI dim de `boot.py` (renderizava azul no conhost do Windows).
