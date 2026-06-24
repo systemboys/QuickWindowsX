@@ -149,7 +149,7 @@ def executar():
 
 
 def _input_senha(prompt: str) -> str:
-    """Lê senha sem eco no Windows; fallback para input() normal em outros sistemas."""
+    """Lê senha sem eco no Windows (mostra *); fallback para input() em outros sistemas."""
     try:
         import msvcrt
         print(prompt, end="", flush=True)
@@ -160,8 +160,7 @@ def _input_senha(prompt: str) -> str:
                 print()
                 break
             if ch in ("\x00", "\xe0"):
-                # Tecla estendida (setas, F1-F12, Delete, etc.) — consome o
-                # segundo byte do par e ignora ambos para nao sujar a senha.
+                # Tecla estendida (setas, F1-F12, Delete...) — descarta o par.
                 msvcrt.getwch()
             elif ch == "\x08":  # backspace
                 if chars:
@@ -169,13 +168,13 @@ def _input_senha(prompt: str) -> str:
                     print("\b \b", end="", flush=True)
             elif ch == "\x03":  # ctrl+c
                 raise KeyboardInterrupt
-            elif ch.isdigit():
+            elif ch >= " ":  # qualquer caractere imprimivel
                 chars.append(ch)
                 print("*", end="", flush=True)
-            # qualquer outro caractere nao-digito e ignorado silenciosamente
         return "".join(chars)
     except ImportError:
-        return input(prompt)
+        import getpass
+        return getpass.getpass(prompt)
 
 
 def _nova_senha_prompt() -> str | None:
@@ -184,6 +183,9 @@ def _nova_senha_prompt() -> str | None:
         p1 = _input_senha("  Nova senha (minimo 6 digitos numericos): ")
         if not p1:
             return None
+        if not p1.isdigit():
+            _warn("Use apenas digitos numericos (0-9). Tente novamente.")
+            continue
         if len(p1) < 6:
             _warn(f"Senha muito curta. Minimo 6 digitos. Voce digitou {len(p1)}.")
             continue
