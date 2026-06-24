@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from src.exceptions import Recarregar
 from src import installer
+from src import logger
 
 _ROOT = Path(__file__).resolve().parent.parent
 
@@ -67,6 +68,7 @@ def _submenu(titulo, opcoes, acoes=None):
 
         if 1 <= escolha <= len(opcoes):
             if acoes and escolha in acoes:
+                logger.log(f"{titulo} > {opcoes[escolha - 1]}")
                 acoes[escolha]()
             else:
                 _em_desenvolvimento(opcoes[escolha - 1])
@@ -1662,6 +1664,7 @@ def rotinas():
         print()
         for i, num in enumerate(validos, 1):
             label, fn = _MAPA[num]
+            logger.log(f"Rotinas > {num} = {label}")
             print(f"  [{i}/{len(validos)}] {num} = {label}")
             print()
             fn()

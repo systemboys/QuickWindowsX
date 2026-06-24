@@ -107,6 +107,7 @@ def executar():
     _check_file("src/screens.py",     "src/screens.py")
     _check_file("src/boot.py",        "src/boot.py")
     _check_file("src/auth.py",        "src/auth.py")
+    _check_file("src/logger.py",      "src/logger.py")
     _check_file("src/exceptions.py",  "src/exceptions.py")
     _check_file("src/installer.py",   "src/installer.py")
     _check_file("src/run_package.ps1","src/run_package.ps1")
@@ -144,6 +145,10 @@ def executar():
     print()
     time.sleep(0.3)
 
+    # ── Registro de inicializacao ─────────────────────────────────────────────
+    from src import logger
+    logger.log(f"QuickWindowsX v{local_ver or '?'} iniciado")
+
     # ── Autenticacao ──────────────────────────────────────────────────────────
     _handle_auth()
 
@@ -179,6 +184,7 @@ def _handle_auth():
         return
 
     from src import auth
+    from src import logger
 
     if not auth.file_exists():
         # Primeira execucao: perguntar uma unica vez sobre senha
@@ -190,6 +196,7 @@ def _handle_auth():
         if resp == "s":
             senha = _nova_senha_prompt()
             if senha and auth.save(senha):
+                logger.log("Senha de protecao configurada")
                 _ok("Senha configurada! O QWX solicitara a senha no proximo acesso.")
             elif senha:
                 _fail("Nao foi possivel salvar a senha. Verifique permissoes em GTiSupport.")
@@ -213,13 +220,16 @@ def _handle_auth():
     for tentativa in range(1, 4):
         senha = _input_senha(f"  Senha ({tentativa}/3): ")
         if auth.verify(senha):
+            logger.log("Acesso autorizado")
             _ok("Acesso autorizado.")
             print()
             return
         restantes = 3 - tentativa
         if restantes > 0:
+            logger.log(f"Tentativa de acesso com senha incorreta ({tentativa}/3)")
             _warn(f"Senha incorreta. Tentativas restantes: {restantes}")
         else:
+            logger.log("Acesso negado apos 3 tentativas com senha incorreta")
             print()
             _fail("Acesso negado. Encerrando o QuickWindowsX.")
             print()
