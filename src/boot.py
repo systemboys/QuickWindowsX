@@ -158,16 +158,13 @@ def _input_senha(prompt: str) -> str:
 
 
 def _nova_senha_prompt() -> str | None:
-    """Solicita e confirma nova senha numerica (minimo 6 digitos). Retorna a senha ou None se cancelado."""
+    """Solicita e confirma nova senha (minimo 6 caracteres). Retorna a senha ou None se cancelado."""
     while True:
-        p1 = _input_senha("  Nova senha (minimo 6 digitos numericos): ")
+        p1 = _input_senha("  Nova senha (minimo 6 caracteres): ")
         if not p1:
             return None
-        if not p1.isdigit():
-            _warn("Use apenas digitos numericos (0-9). Tente novamente.")
-            continue
         if len(p1) < 6:
-            _warn(f"Senha muito curta. Minimo 6 digitos. Voce digitou {len(p1)}.")
+            _warn(f"Senha muito curta. Minimo 6 caracteres. Voce digitou {len(p1)}.")
             continue
         p2 = _input_senha("  Confirmar senha: ")
         if p1 != p2:
@@ -186,8 +183,8 @@ def _handle_auth():
     if not auth.file_exists():
         # Primeira execucao: perguntar uma unica vez sobre senha
         print("  ─────────────────────────────────────────────")
-        print("  Deseja proteger o QWX com senha numerica?")
-        print("  (minimo 6 digitos — opcional, Enter para pular)")
+        print("  Deseja proteger o QWX com senha?")
+        print("  (minimo 6 caracteres — opcional, Enter para pular)")
         print("  ─────────────────────────────────────────────")
         resp = input("  Ativar protecao por senha? (s/N): ").strip().lower()
         if resp == "s":

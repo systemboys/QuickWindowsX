@@ -649,7 +649,7 @@ def _gerenciar_senha():
             print(f"  {_R}2{_X} - Remover protecao por senha")
             print(f"  {_X}0{_X} - Voltar")
         else:
-            print(f"  {_G}1{_X} - Ativar protecao por senha (minimo 6 digitos)")
+            print(f"  {_G}1{_X} - Ativar protecao por senha (minimo 6 caracteres)")
             print(f"  {_X}0{_X} - Voltar")
 
         print(SEP)
