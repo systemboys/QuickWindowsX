@@ -909,7 +909,9 @@ def _limpar_spooler():
         return
     print()
     ps_script = r"""
-        $spoolDir = "$env:SystemRoot\System32\spool\PRINTERS"
+        $spoolDir  = "$env:SystemRoot\System32\spool\PRINTERS"
+        $removidos = 0
+        $ignorados = 0
 
         Write-Host "  Parando servico Spooler..." -ForegroundColor Cyan
         Stop-Service Spooler -Force -ErrorAction SilentlyContinue
@@ -920,8 +922,10 @@ def _limpar_spooler():
                 try {
                     Remove-Item $arq.FullName -Force -ErrorAction Stop
                     Write-Host "  [OK] Removido: $($arq.FullName)" -ForegroundColor Green
+                    $removidos++
                 } catch {
                     Write-Host "  [AVISO] Nao removido: $($arq.FullName)" -ForegroundColor Yellow
+                    $ignorados++
                 }
             }
         } else {
@@ -933,6 +937,16 @@ def _limpar_spooler():
         Start-Service Spooler -ErrorAction SilentlyContinue
         Write-Host ""
         Write-Host "  [OK] Spooler de impressao limpo e reiniciado." -ForegroundColor Green
+
+        $logPath = "$env:USERPROFILE\GTiSupport\QWX_Log.txt"
+        $ts      = Get-Date -Format 'yyyy/MM/dd HH:mm:ss'
+        $entry   = "$ts - Limpar Spooler: $removidos arquivo(s) removido(s), $ignorados ignorado(s)"
+        if (Test-Path $logPath) {
+            $existing = Get-Content $logPath -Raw -Encoding UTF8
+            Set-Content $logPath -Value ($entry + "`n" + $existing) -Encoding UTF8 -NoNewline
+        } else {
+            Set-Content $logPath -Value $entry -Encoding UTF8
+        }
     """
     _ps(ps_script)
     print()
@@ -984,6 +998,16 @@ def _limpar_temporarios():
 
         Write-Host ""
         Write-Host "  [OK] Concluido: $deletados item(ns) removido(s), $erros nao puderam ser removidos." -ForegroundColor Green
+
+        $logPath = "$env:USERPROFILE\GTiSupport\QWX_Log.txt"
+        $ts      = Get-Date -Format 'yyyy/MM/dd HH:mm:ss'
+        $entry   = "$ts - Limpar Temporarios: $deletados arquivo(s)/pasta(s) removido(s), $erros ignorado(s)"
+        if (Test-Path $logPath) {
+            $existing = Get-Content $logPath -Raw -Encoding UTF8
+            Set-Content $logPath -Value ($entry + "`n" + $existing) -Encoding UTF8 -NoNewline
+        } else {
+            Set-Content $logPath -Value $entry -Encoding UTF8
+        }
     """
     _ps(ps_script)
     print()
