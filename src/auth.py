@@ -47,14 +47,20 @@ def verify(password: str) -> bool:
     return _hash(password) == stored
 
 
-def save(password: str) -> None:
+def save(password: str) -> bool:
+    """Salva o hash da senha. Retorna True se gravado com sucesso."""
     path = _auth_path()
     if path is None:
-        return
-    path.write_text(
-        json.dumps({"senha": _hash(password)}, indent=2, ensure_ascii=True),
-        encoding="utf-8",
-    )
+        return False
+    try:
+        path.write_text(
+            json.dumps({"senha": _hash(password)}, indent=2, ensure_ascii=True),
+            encoding="utf-8",
+        )
+        return get_hash() is not None  # confirma que foi gravado
+    except Exception as e:
+        print(f"  [ERRO ao salvar senha]: {e}")
+        return False
 
 
 def clear() -> None:

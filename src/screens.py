@@ -667,11 +667,13 @@ def _gerenciar_senha():
             # Adicionar nova senha
             print()
             senha = _nova_senha_prompt()
-            if senha:
-                auth.save(senha)
+            if senha and auth.save(senha):
                 print()
                 print(f"  {_G}Senha ativada com sucesso!{_X}")
                 print("  O QWX solicitara a senha a cada inicializacao.")
+            elif senha:
+                print()
+                print(f"  {_R}Erro ao salvar senha. Verifique permissoes em GTiSupport.{_X}")
             else:
                 print()
                 print("  Operacao cancelada.")
@@ -688,10 +690,12 @@ def _gerenciar_senha():
                 continue
             print()
             nova = _nova_senha_prompt()
-            if nova:
-                auth.save(nova)
+            if nova and auth.save(nova):
                 print()
                 print(f"  {_G}Senha alterada com sucesso!{_X}")
+            elif nova:
+                print()
+                print(f"  {_R}Erro ao salvar senha. Verifique permissoes em GTiSupport.{_X}")
             else:
                 print()
                 print("  Operacao cancelada.")

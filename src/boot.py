@@ -149,32 +149,12 @@ def executar():
 
 
 def _input_senha(prompt: str) -> str:
-    """Lê senha sem eco no Windows (mostra *); fallback para input() em outros sistemas."""
+    """Lê senha sem eco. Usa getpass (padrão Python) com fallback para input()."""
+    import getpass
     try:
-        import msvcrt
-        print(prompt, end="", flush=True)
-        chars = []
-        while True:
-            ch = msvcrt.getwch()
-            if ch in ("\r", "\n"):
-                print()
-                break
-            if ch in ("\x00", "\xe0"):
-                # Tecla estendida (setas, F1-F12, Delete...) — descarta o par.
-                msvcrt.getwch()
-            elif ch == "\x08":  # backspace
-                if chars:
-                    chars.pop()
-                    print("\b \b", end="", flush=True)
-            elif ch == "\x03":  # ctrl+c
-                raise KeyboardInterrupt
-            elif ch >= " ":  # qualquer caractere imprimivel
-                chars.append(ch)
-                print("*", end="", flush=True)
-        return "".join(chars)
-    except ImportError:
-        import getpass
         return getpass.getpass(prompt)
+    except Exception:
+        return input(prompt)
 
 
 def _nova_senha_prompt() -> str | None:
@@ -212,9 +192,11 @@ def _handle_auth():
         resp = input("  Ativar protecao por senha? (s/N): ").strip().lower()
         if resp == "s":
             senha = _nova_senha_prompt()
-            if senha:
-                auth.save(senha)
+            if senha and auth.save(senha):
                 _ok("Senha configurada! O QWX solicitara a senha no proximo acesso.")
+            elif senha:
+                _fail("Nao foi possivel salvar a senha. Verifique permissoes em GTiSupport.")
+                auth.clear()
             else:
                 auth.clear()  # cria o arquivo vazio para nao perguntar de novo
                 _warn("Configuracao de senha cancelada.")
