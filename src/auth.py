@@ -30,6 +30,12 @@ def get_hash() -> str | None:
         return None
 
 
+def file_exists() -> bool:
+    """Retorna True se o arquivo de autenticacao ja foi criado (independente de ter senha)."""
+    path = _auth_path()
+    return path is not None and path.exists()
+
+
 def has_password() -> bool:
     return get_hash() is not None
 

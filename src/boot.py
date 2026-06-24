@@ -179,13 +179,13 @@ def _input_senha(prompt: str) -> str:
 
 
 def _nova_senha_prompt() -> str | None:
-    """Solicita e confirma nova senha numerica (4-12 digitos). Retorna a senha ou None se cancelado."""
+    """Solicita e confirma nova senha numerica (minimo 6 digitos). Retorna a senha ou None se cancelado."""
     while True:
-        p1 = _input_senha("  Nova senha (4 a 12 digitos numericos): ")
+        p1 = _input_senha("  Nova senha (minimo 6 digitos numericos): ")
         if not p1:
             return None
-        if len(p1) < 4 or len(p1) > 12:
-            _warn(f"Senha deve ter entre 4 e 12 digitos. Voce digitou {len(p1)}.")
+        if len(p1) < 6:
+            _warn(f"Senha muito curta. Minimo 6 digitos. Voce digitou {len(p1)}.")
             continue
         p2 = _input_senha("  Confirmar senha: ")
         if p1 != p2:
@@ -201,10 +201,11 @@ def _handle_auth():
 
     from src import auth
 
-    if not auth.has_password():
+    if not auth.file_exists():
+        # Primeira execucao: perguntar uma unica vez sobre senha
         print("  ─────────────────────────────────────────────")
         print("  Deseja proteger o QWX com senha numerica?")
-        print("  (4 a 12 digitos — opcional, Enter para pular)")
+        print("  (minimo 6 digitos — opcional, Enter para pular)")
         print("  ─────────────────────────────────────────────")
         resp = input("  Ativar protecao por senha? (s/N): ").strip().lower()
         if resp == "s":
@@ -213,9 +214,15 @@ def _handle_auth():
                 auth.save(senha)
                 _ok("Senha configurada! O QWX solicitara a senha no proximo acesso.")
             else:
+                auth.clear()  # cria o arquivo vazio para nao perguntar de novo
                 _warn("Configuracao de senha cancelada.")
+        else:
+            auth.clear()  # cria o arquivo vazio para nao perguntar de novo
         print()
         return
+
+    if not auth.has_password():
+        return  # Arquivo existe mas sem senha — acesso direto, sem perguntar
 
     # Senha ativa: solicitar acesso
     print()
