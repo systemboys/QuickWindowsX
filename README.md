@@ -2,7 +2,7 @@
 
 Menu interativo para agilizar instalações, rotinas e configurações no Windows durante formatação ou manutenção de computadores.
 
-Versão atual: **2.4.0**
+Versão atual: **2.5.0**
 
 [![Menu interativo QuickWindowsX](./Images/MenuQWX.png "Menu interativo QuickWindowsX")](#rotinas-para-instala%C3%A7%C3%B5es-padr%C3%A3o)
 
@@ -109,6 +109,19 @@ QuickWindowsX/
 | 8 | Sistemas Operacionais Microsoft (Windows 10 x32/x64, Windows 11 x64) |
 | 9 | Executar Rotinas (execução em lote por números separados por vírgula) |
 
+### Navegação rápida (atalho direto)
+
+No menu principal, você pode ir diretamente a uma opção sem navegar pelos submenus usando o formato `sessao:opcao`:
+
+| Formato | Exemplo | Resultado |
+|---------|---------|-----------|
+| `sessao:opcao` | `3:7` | Executa a opção 7 da sessão 3 (Google Chrome) |
+| `sessao:opcao` | `2:1` | Executa a opção 1 da sessão 2 (Desligar o Windows) |
+| `9:rotinas` | `9:37,63,65` | Executa as rotinas 37, 63 e 65 diretamente |
+| `9:rotina` | `9:625` | Executa a rotina 625 (Limpar Spooler) diretamente |
+
+> **Sessão 9 (Rotinas):** use vírgula para separar múltiplas rotinas, igual à tela de rotinas normal.
+
 ---
 
 ## Rotinas para instalações padrão
@@ -213,6 +226,7 @@ Salve o arquivo. Na próxima execução o QWX iniciará sem pedir senha.
 > As versões **1.x.x** correspondem ao **QuickWindows** (base original em PowerShell/CMD).
 > A versão **2.0.0** marca o início do **QuickWindowsX** (reescrita em Python 3).
 
+- **v2.5.0** 2026-06-24 — Navegacao rapida por atalho direto no menu principal: digitando `sessao:opcao` (ex: `3:7` para Google Chrome) ou `9:rotinas` (ex: `9:37,63,65`) o QWX executa a acao sem navegar pelo submenu. Documentacao de navegacao rapida adicionada ao README.
 - **v2.4.0** 2026-06-24 — Sistema de log implementado em `src/logger.py`: todas as acoes executadas (submenus, rotinas em lote, inicializacao, eventos de autenticacao) sao registradas automaticamente em `%USERPROFILE%\GTiSupport\QWX_Log.txt` com timestamp no formato `yyyy/MM/dd HH:mm:ss`. Entradas inseridas sempre no topo do arquivo (mais recentes primeiro). Senha de protecao ampliada para aceitar letras, numeros e caracteres especiais (minimo 6 caracteres). Confirmacoes duplas de exclusao e atualizacao do QWX reduzidas para uma unica confirmacao.
 - **v2.3.0** 2026-06-24 — Protecao por senha de 6 digitos numericos: na primeira execucao o QWX oferece ativar a senha; em execucoes seguintes, se senha configurada, solicita autenticacao antes de exibir o menu (3 tentativas); gerenciador de senha em "Menu QuickWindows > Gerenciar Senha de Acesso" permite ativar, alterar ou remover a senha. Arquivo de senha armazenado em %USERPROFILE%\GTiSupport\qwx_auth.json (instrucoes de recuperacao no README). Modulo src/auth.py adicionado.
 - **v2.2.0** 2026-06-23 — Verificacao de atualizacao disponivel na inicializacao do boot e no cabecalho do menu principal: exibe aviso em amarelo quando ha versao mais recente no repositorio, com instrucao de como atualizar. Opcao "Deletar QuickWindowsX" agora remove tambem o atalho "GTi Support QWX" da Area de Trabalho apos a exclusao do diretorio.

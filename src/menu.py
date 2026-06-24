@@ -78,6 +78,26 @@ def rodar():
 
         entrada = input("  Opcao: ").strip()
 
+        # ── Atalho direto: sessao:opcao  ou  9:rotinas ───────────────────────
+        if ":" in entrada:
+            partes = entrada.split(":", 1)
+            sessao_str, resto = partes[0].strip(), partes[1].strip()
+            if sessao_str.isdigit() and resto and int(sessao_str) in _ACOES:
+                sessao = int(sessao_str)
+                if sessao == 9:
+                    screens.rotinas(preset=resto)
+                elif sessao == 5:
+                    _ACOES[sessao]()
+                elif resto.isdigit():
+                    _ACOES[sessao](preset=int(resto))
+                else:
+                    print("  Formato invalido. Use sessao:numero (ex: 3:7) ou 9:rotinas (ex: 9:37,63).")
+                    input("  Pressione Enter para continuar...")
+            else:
+                print("  Formato invalido. Use sessao:numero (ex: 3:7) ou 9:rotinas (ex: 9:37,63).")
+                input("  Pressione Enter para continuar...")
+            continue
+
         if not entrada.isdigit():
             _limpar()
             _cabecalho(versao, aviso)

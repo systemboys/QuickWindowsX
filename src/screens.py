@@ -41,12 +41,27 @@ def _confirmar(pergunta):
 
 # ─── Motor de submenu ─────────────────────────────────────────────────────────
 
-def _submenu(titulo, opcoes, acoes=None):
+def _submenu(titulo, opcoes, acoes=None, preset=None):
     """
     Exibe um submenu interativo.
     acoes: dict {int: callable} — se a chave existir, chama o callable;
            caso contrario exibe tela "em desenvolvimento".
+    preset: int — se fornecido, executa essa opcao diretamente e retorna sem exibir o menu.
     """
+    if preset is not None:
+        if 1 <= preset <= len(opcoes):
+            if acoes and preset in acoes:
+                logger.log(f"{titulo} > {opcoes[preset - 1]}")
+                acoes[preset]()
+            else:
+                _em_desenvolvimento(opcoes[preset - 1])
+        else:
+            print()
+            print(f"  Opcao {preset} invalida. '{titulo}' tem {len(opcoes)} opcoes.")
+            print()
+            input("  Pressione Enter para continuar...")
+        return
+
     while True:
         _clear()
         _cabecalho(titulo)
@@ -1196,21 +1211,21 @@ def _rota_conexao():
 
 # ─── Secoes do menu principal ─────────────────────────────────────────────────
 
-def menu_quickwindows():
+def menu_quickwindows(preset=None):
     _submenu("QuickWindowsX / Menu", [
         "Atualizar QuickWindows",
         "Deletar QuickWindows",
         "Recarregar QuickWindows",
         "Documentacao do QuickWindows",
         "Gerenciar Senha de Acesso",
-    ], _ACOES_MENU_QWX)
+    ], _ACOES_MENU_QWX, preset=preset)
 
 
-def windows():
-    _submenu("QuickWindowsX / Windows", _OPCOES_WINDOWS, _ACOES_WINDOWS)
+def windows(preset=None):
+    _submenu("QuickWindowsX / Windows", _OPCOES_WINDOWS, _ACOES_WINDOWS, preset=preset)
 
 
-def internet():
+def internet(preset=None):
     _submenu("QuickWindowsX / Internet", [
         "AnyDesk",
         "RustDesk",
@@ -1243,10 +1258,10 @@ def internet():
         13: _instalar("Internet", "Transmission"),
         14: _instalar("Internet", "IDM - Internet Download Manager"),
         15: _baixar_url,
-    })
+    }, preset=preset)
 
 
-def utilitarios():
+def utilitarios(preset=None):
     _submenu("QuickWindowsX / Utilitarios para Windows", [
         "Revo Uninstaller",
         "Revo Uninstaller Portable",
@@ -1317,10 +1332,10 @@ def utilitarios():
         32: _instalar("UtilitiesForWindows", "WizTree"),
         33: _instalar("UtilitiesForWindows", "WizTree64"),
         34: _battery_report,
-    })
+    }, preset=preset)
 
 
-def escritorio():
+def escritorio(preset=None):
     _submenu("QuickWindowsX / Softwares para Escritorio", [
         "Microsoft Office 365",
         "Microsoft Office 2016 a 2019",
@@ -1331,10 +1346,10 @@ def escritorio():
         2: _instalar("OfficeSoftware", "Microsoft Office 2016 a 2019"),
         3: _instalar("OfficeSoftware", "Microsoft Office 2019 a 2021"),
         4: _atalhos_office_2021,
-    })
+    }, preset=preset)
 
 
-def sistemas_operacionais():
+def sistemas_operacionais(preset=None):
     _submenu("QuickWindowsX / Sistemas Operacionais Microsoft", [
         "Windows 10 22H2 Portugues x32",
         "Windows 10 22H2 Portugues x64",
@@ -1343,7 +1358,7 @@ def sistemas_operacionais():
         1: _instalar("MicrosoftOperatingSystems", "Windows 10 22H2 Portugues x32"),
         2: _instalar("MicrosoftOperatingSystems", "Windows 10 22H2 Portugues x64"),
         3: _instalar("MicrosoftOperatingSystems", "Windows 11 24H2 Portugues x64"),
-    })
+    }, preset=preset)
 
 
 # ─── Secoes ainda sem submenu ─────────────────────────────────────────────────
@@ -1395,7 +1410,7 @@ def _executar_comando_ps():
         print()
 
 
-def redes():
+def redes(preset=None):
     _submenu("QuickWindowsX / Redes", [
         "Obter IP publico",
         "Obter IP local",
@@ -1404,14 +1419,14 @@ def redes():
         1: _obter_ip_publico,
         2: _obter_ip_local,
         3: _rota_conexao,
-    })
+    }, preset=preset)
 
 
 def powershell():
     _executar_comando_ps()
 
 
-def rotinas():
+def rotinas(preset=None):
     _G  = "\033[92m"   # verde
     _R  = "\033[91m"   # vermelho
     _C  = "\033[96m"   # ciano
@@ -1527,6 +1542,33 @@ def rotinas():
         "82":  ("Windows 10 22H2 Portugues x64",                  _instalar("MicrosoftOperatingSystems", "Windows 10 22H2 Portugues x64")),
         "83":  ("Windows 11 24H2 Portugues x64",                  _instalar("MicrosoftOperatingSystems", "Windows 11 24H2 Portugues x64")),
     }
+
+    if preset is not None:
+        numeros   = [x.strip() for x in preset.split(",")]
+        validos   = [n for n in numeros if n in _MAPA]
+        invalidos = [n for n in numeros if n and n not in _MAPA]
+        if invalidos:
+            print()
+            print(f"  {_R}[!] Rotinas nao reconhecidas: {', '.join(invalidos)}{_X}")
+            if not validos:
+                input("  Pressione Enter para continuar...")
+                return
+            input("  Pressione Enter para executar as validas...")
+        if validos:
+            _clear()
+            print()
+            print(f"  {_C}Executando {len(validos)} rotina(s): {', '.join(validos)}{_X}")
+            print()
+            for i, num in enumerate(validos, 1):
+                label, fn = _MAPA[num]
+                logger.log(f"Rotinas > {num} = {label}")
+                print(f"  [{i}/{len(validos)}] {num} = {label}")
+                print()
+                fn()
+            print()
+            print(f"  {_G}Rotinas concluidas: {', '.join(validos)}{_X}")
+            input("  Pressione Enter para continuar...")
+        return
 
     while True:
         _clear()
