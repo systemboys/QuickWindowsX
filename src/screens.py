@@ -505,8 +505,6 @@ def _deletar_quickwindowsx():
     print()
     if not _confirmar("Tem certeza que deseja deletar o QuickWindowsX?"):
         return
-    if not _confirmar("Confirmar exclusao definitiva?"):
-        return
 
     if os.name != "nt":
         print()
@@ -561,8 +559,6 @@ def _atualizar_quickwindowsx():
     print("  e a versao mais recente sera baixada automaticamente.")
     print()
     if not _confirmar("Deseja atualizar o QuickWindowsX agora?"):
-        return
-    if not _confirmar("Confirmar atualizacao? O programa sera encerrado."):
         return
 
     if os.name != "nt":
