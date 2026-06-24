@@ -174,7 +174,7 @@ Copie as rotinas a executar no QuickWindowsX:
 
 ## Senha de acesso
 
-O QuickWindowsX permite configurar uma senha de **6 dígitos numéricos** para proteger o acesso ao menu. Útil quando o atalho é deixado na Área de Trabalho após um serviço — evita que usuários leigos executem ações indevidas.
+O QuickWindowsX permite configurar uma senha **numérica de 4 a 12 dígitos** para proteger o acesso ao menu. Útil quando o atalho é deixado na Área de Trabalho após um serviço — evita que usuários leigos executem ações indevidas.
 
 ### Configurar senha
 

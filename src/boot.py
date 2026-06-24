@@ -159,28 +159,33 @@ def _input_senha(prompt: str) -> str:
             if ch in ("\r", "\n"):
                 print()
                 break
-            if ch == "\x08":  # backspace
+            if ch in ("\x00", "\xe0"):
+                # Tecla estendida (setas, F1-F12, Delete, etc.) — consome o
+                # segundo byte do par e ignora ambos para nao sujar a senha.
+                msvcrt.getwch()
+            elif ch == "\x08":  # backspace
                 if chars:
                     chars.pop()
                     print("\b \b", end="", flush=True)
             elif ch == "\x03":  # ctrl+c
                 raise KeyboardInterrupt
-            else:
+            elif ch.isdigit():
                 chars.append(ch)
                 print("*", end="", flush=True)
+            # qualquer outro caractere nao-digito e ignorado silenciosamente
         return "".join(chars)
     except ImportError:
         return input(prompt)
 
 
 def _nova_senha_prompt() -> str | None:
-    """Solicita e confirma nova senha de 6 dígitos. Retorna a senha ou None se cancelado."""
+    """Solicita e confirma nova senha numerica (4-12 digitos). Retorna a senha ou None se cancelado."""
     while True:
-        p1 = _input_senha("  Nova senha (6 digitos numericos): ")
+        p1 = _input_senha("  Nova senha (4 a 12 digitos numericos): ")
         if not p1:
             return None
-        if not p1.isdigit() or len(p1) != 6:
-            _warn("A senha deve conter exatamente 6 digitos numericos.")
+        if len(p1) < 4 or len(p1) > 12:
+            _warn(f"Senha deve ter entre 4 e 12 digitos. Voce digitou {len(p1)}.")
             continue
         p2 = _input_senha("  Confirmar senha: ")
         if p1 != p2:
@@ -198,8 +203,8 @@ def _handle_auth():
 
     if not auth.has_password():
         print("  ─────────────────────────────────────────────")
-        print("  Deseja proteger o QWX com senha de 6 digitos?")
-        print("  (opcional — pressione Enter para pular)")
+        print("  Deseja proteger o QWX com senha numerica?")
+        print("  (4 a 12 digitos — opcional, Enter para pular)")
         print("  ─────────────────────────────────────────────")
         resp = input("  Ativar protecao por senha? (s/N): ").strip().lower()
         if resp == "s":
