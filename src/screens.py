@@ -39,6 +39,36 @@ def _confirmar(pergunta):
     return resp in ("s", "sim")
 
 
+def _input_opcao(prompt="  Opcao: ") -> str:
+    """Lê opção do submenu. ESC retorna 'esc'; Enter confirma; Backspace corrige."""
+    if os.name != "nt":
+        return input(prompt).strip()
+    try:
+        import msvcrt
+        print(prompt, end="", flush=True)
+        chars = []
+        while True:
+            ch = msvcrt.getwch()
+            if ch == "\x1b":            # ESC
+                print()
+                return "esc"
+            if ch in ("\r", "\n"):      # Enter
+                print()
+                return "".join(chars).strip()
+            if ch in ("\x00", "\xe0"):  # tecla estendida (setas, F-keys) — ignorar
+                msvcrt.getwch()
+                continue
+            if ch == "\x08":            # Backspace
+                if chars:
+                    chars.pop()
+                    print("\b \b", end="", flush=True)
+            elif ch.isprintable():
+                chars.append(ch)
+                print(ch, end="", flush=True)
+    except Exception:
+        return input(prompt).strip()
+
+
 # ─── Motor de submenu ─────────────────────────────────────────────────────────
 
 def _submenu(titulo, opcoes, acoes=None, preset=None):
@@ -50,7 +80,7 @@ def _submenu(titulo, opcoes, acoes=None, preset=None):
     """
     if preset is not None:
         itens = preset if isinstance(preset, list) else [preset]
-        for item in itens:
+        for idx, item in enumerate(itens):
             # item pode ser int ou tupla (opcao, sub_preset) para drill-down
             if isinstance(item, tuple):
                 opcao, sub_preset = item
@@ -68,6 +98,10 @@ def _submenu(titulo, opcoes, acoes=None, preset=None):
                             fn()
                     else:
                         fn()
+                    # Pausa entre acoes sequenciais no modo preset
+                    if len(itens) > 1 and idx < len(itens) - 1:
+                        print()
+                        input("  Pressione Enter para continuar para a proxima acao...")
                 else:
                     _em_desenvolvimento(opcoes[opcao - 1])
             else:
@@ -85,9 +119,9 @@ def _submenu(titulo, opcoes, acoes=None, preset=None):
             print(f"  {i:>2}: {label}")
         print()
 
-        entrada = input("  Opcao: ").strip()
+        entrada = _input_opcao()
 
-        if entrada == "0":
+        if entrada in ("0", "esc"):
             return
 
         if not entrada.isdigit():
@@ -1716,9 +1750,9 @@ def rotinas(preset=None):
         print("  Digite 0 para voltar.")
         print()
 
-        entrada = input("  Rotinas: ").strip()
+        entrada = _input_opcao("  Rotinas: ")
 
-        if entrada == "0":
+        if entrada in ("0", "esc"):
             return
 
         if not entrada:

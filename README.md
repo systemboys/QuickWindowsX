@@ -2,7 +2,7 @@
 
 Menu interativo para agilizar instalações, rotinas e configurações no Windows durante formatação ou manutenção de computadores.
 
-Versão atual: **2.7.0**
+Versão atual: **2.8.1**
 
 [![Menu interativo QuickWindowsX](./Images/MenuQWX.png "Menu interativo QuickWindowsX")](#rotinas-para-instala%C3%A7%C3%B5es-padr%C3%A3o)
 
@@ -265,6 +265,8 @@ Salve o arquivo. Na próxima execução o QWX iniciará sem pedir senha.
 > As versões **1.x.x** correspondem ao **QuickWindows** (base original em PowerShell/CMD).
 > A versão **2.0.0** marca o início do **QuickWindowsX** (reescrita em Python 3).
 
+- **v2.8.1** 2026-06-25 — ESC estendido para a tela de Executar Rotinas: pressionar ESC na sessao 9 volta ao menu principal, igual ao comportamento dos demais submenus.
+- **v2.8.0** 2026-06-25 — Tecla ESC nos submenus: pressionar ESC volta ao nivel anterior sem precisar digitar 0. Execucao sequencial corrigida no modo preset: quando multiplas opcoes sao executadas via atalho direto (ex: `2:5:1,2,3`), cada acao aguarda confirmacao do usuario antes de iniciar a proxima, igual ao comportamento das rotinas em lote. ESC nao fecha o QWX no menu principal.
 - **v2.7.0** 2026-06-24 — Navegacao aninhada com drill-down: formato `sessao:sub_opcao:opcoes` (ex: `2:5:1,11`) permite acessar opcoes dentro de sub-sessoes diretamente do menu principal, sem navegar manualmente pelos submenus intermediarios. `_configuracoes` e `_submenu` atualizados para suportar preset aninhado via tupla. README atualizado com exemplos do formato completo.
 - **v2.6.0** 2026-06-24 — Navegacao rapida estendida: suporte a multiplas opcoes por sessao (`3:1,7`) e multiplas sessoes por comando (`3:7;6:3,5;9:37,63`), usando virgula para separar opcoes e ponto-e-virgula para separar sessoes. README atualizado com tabela de formatos e separadores.
 - **v2.5.0** 2026-06-24 — Navegacao rapida por atalho direto no menu principal: digitando `sessao:opcao` (ex: `3:7` para Google Chrome) ou `9:rotinas` (ex: `9:37,63,65`) o QWX executa a acao sem navegar pelo submenu. Documentacao de navegacao rapida adicionada ao README.
