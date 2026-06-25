@@ -270,9 +270,9 @@ def _agendar_desligamento():
         print("   0: Voltar")
         print()
 
-        escolha = input("  Opcao: ").strip()
+        escolha = _input_opcao()
 
-        if escolha == "0":
+        if escolha in ("0", "esc"):
             return
         elif escolha == "1":
             _cancelar_agendamento()
@@ -291,21 +291,66 @@ def _agendar_desligamento():
             input("  Pressione Enter para continuar...")
             return
 
-    entrada = input("  Informe em quantos minutos desligar (ex.: 3): ").strip()
+    # ── Modo de agendamento ───────────────────────────────────────────────────
+    print("  Como deseja agendar o desligamento?")
+    print()
+    print("   1: Em quantos minutos  (ex.: 30)")
+    print("   2: Horario especifico  (ex.: 15:20)")
+    print("   0: Cancelar")
+    print()
 
-    if not entrada.isdigit() or int(entrada) <= 0:
-        print()
-        print("  Valor invalido. Operacao cancelada.")
-        input("  Pressione Enter para voltar...")
+    modo = _input_opcao()
+
+    if modo in ("0", "esc"):
         return
 
-    minutos  = int(entrada)
-    segundos = minutos * 60
+    if modo == "1":
+        print()
+        entrada = input("  Em quantos minutos desligar: ").strip()
+        if not entrada.isdigit() or int(entrada) <= 0:
+            print()
+            print("  Valor invalido. Operacao cancelada.")
+            input("  Pressione Enter para voltar...")
+            return
+        minutos  = int(entrada)
+        segundos = minutos * 60
+        alvo     = datetime.now() + timedelta(minutes=minutos)
+
+    elif modo == "2":
+        print()
+        entrada = input("  Horario de desligamento (HH:MM): ").strip()
+        partes  = entrada.split(":")
+        if len(partes) != 2 or not partes[0].isdigit() or not partes[1].isdigit():
+            print()
+            print("  Formato invalido. Use HH:MM (ex.: 15:20).")
+            input("  Pressione Enter para voltar...")
+            return
+        hh, mm = int(partes[0]), int(partes[1])
+        if not (0 <= hh <= 23 and 0 <= mm <= 59):
+            print()
+            print("  Horario invalido. Use horas entre 0-23 e minutos entre 0-59.")
+            input("  Pressione Enter para voltar...")
+            return
+        agora = datetime.now()
+        alvo  = agora.replace(hour=hh, minute=mm, second=0, microsecond=0)
+        if alvo <= agora:
+            alvo += timedelta(days=1)  # agendar para amanha se o horario ja passou
+        segundos = int((alvo - agora).total_seconds())
+        minutos  = segundos // 60
+
+    else:
+        print()
+        print("  Opcao invalida.")
+        input("  Pressione Enter para continuar...")
+        return
 
     _ps(f"shutdown /s /t {segundos}")
     _salvar_agendamento(minutos)
     print()
-    print(f"  Desligamento agendado para {minutos} minuto(s).")
+    if modo == "2":
+        print(f"  Desligamento agendado para {alvo.strftime('%d/%m/%Y as %H:%M')} (aprox. {minutos} minuto(s)).")
+    else:
+        print(f"  Desligamento agendado para {minutos} minuto(s).")
     input("  Pressione Enter para continuar...")
 
 
