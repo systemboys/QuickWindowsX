@@ -49,17 +49,32 @@ def _submenu(titulo, opcoes, acoes=None, preset=None):
     preset: int — se fornecido, executa essa opcao diretamente e retorna sem exibir o menu.
     """
     if preset is not None:
-        if 1 <= preset <= len(opcoes):
-            if acoes and preset in acoes:
-                logger.log(f"{titulo} > {opcoes[preset - 1]}")
-                acoes[preset]()
+        itens = preset if isinstance(preset, list) else [preset]
+        for item in itens:
+            # item pode ser int ou tupla (opcao, sub_preset) para drill-down
+            if isinstance(item, tuple):
+                opcao, sub_preset = item
             else:
-                _em_desenvolvimento(opcoes[preset - 1])
-        else:
-            print()
-            print(f"  Opcao {preset} invalida. '{titulo}' tem {len(opcoes)} opcoes.")
-            print()
-            input("  Pressione Enter para continuar...")
+                opcao, sub_preset = item, None
+
+            if 1 <= opcao <= len(opcoes):
+                if acoes and opcao in acoes:
+                    logger.log(f"{titulo} > {opcoes[opcao - 1]}")
+                    fn = acoes[opcao]
+                    if sub_preset is not None:
+                        try:
+                            fn(preset=sub_preset)
+                        except TypeError:
+                            fn()
+                    else:
+                        fn()
+                else:
+                    _em_desenvolvimento(opcoes[opcao - 1])
+            else:
+                print()
+                print(f"  Opcao {opcao} invalida. '{titulo}' tem {len(opcoes)} opcoes.")
+                print()
+                input("  Pressione Enter para continuar...")
         return
 
     while True:
@@ -360,7 +375,7 @@ def _informacoes_sistema():
     input("  Pressione Enter para continuar...")
 
 
-def _configuracoes():
+def _configuracoes(preset=None):
     def _abrir(cmd, args=""):
         def _acao():
             if args:
@@ -403,7 +418,7 @@ def _configuracoes():
         14: _abrir("taskmgr"),
         15: _abrir("control", "folders"),
         16: _informacoes_sistema,
-    })
+    }, preset=preset)
 
 
 def _criar_atalhos():

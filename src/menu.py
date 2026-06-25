@@ -78,24 +78,43 @@ def rodar():
 
         entrada = input("  Opcao: ").strip()
 
-        # ── Atalho direto: sessao:opcao  ou  9:rotinas ───────────────────────
+        # ── Atalho direto: [sessao:op,...;sessao:sub:op,...] ─────────────────
         if ":" in entrada:
-            partes = entrada.split(":", 1)
-            sessao_str, resto = partes[0].strip(), partes[1].strip()
-            if sessao_str.isdigit() and resto and int(sessao_str) in _ACOES:
+            chunks = [c.strip() for c in entrada.split(";") if c.strip()]
+            for chunk in chunks:
+                partes = chunk.split(":", 2)   # max 3 partes: sessao:sub:opcoes
+                if len(partes) < 2:
+                    continue
+                sessao_str = partes[0].strip()
+                if not sessao_str.isdigit():
+                    continue
                 sessao = int(sessao_str)
+                if sessao not in _ACOES:
+                    print(f"  Sessao {sessao} nao existe.")
+                    input("  Pressione Enter para continuar...")
+                    continue
+
+                if len(partes) == 3:
+                    # formato: sessao:sub_opcao:opcoes_internas  (drill-down)
+                    sub_str, opcoes_str = partes[1].strip(), partes[2].strip()
+                    sub_opcao = int(sub_str) if sub_str.isdigit() else None
+                    sub_nums = [int(n.strip()) for n in opcoes_str.split(",")
+                                if n.strip().isdigit()]
+                    if sub_opcao and sub_nums:
+                        _ACOES[sessao](preset=[(sub_opcao, sub_nums)])
+                    continue
+
+                # formato: sessao:op1,op2  (opcoes diretas)
+                resto = partes[1].strip()
                 if sessao == 9:
                     screens.rotinas(preset=resto)
                 elif sessao == 5:
                     _ACOES[sessao]()
-                elif resto.isdigit():
-                    _ACOES[sessao](preset=int(resto))
                 else:
-                    print("  Formato invalido. Use sessao:numero (ex: 3:7) ou 9:rotinas (ex: 9:37,63).")
-                    input("  Pressione Enter para continuar...")
-            else:
-                print("  Formato invalido. Use sessao:numero (ex: 3:7) ou 9:rotinas (ex: 9:37,63).")
-                input("  Pressione Enter para continuar...")
+                    nums = [int(n.strip()) for n in resto.split(",")
+                            if n.strip().isdigit()]
+                    if nums:
+                        _ACOES[sessao](preset=nums)
             continue
 
         if not entrada.isdigit():

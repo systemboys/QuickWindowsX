@@ -2,7 +2,7 @@
 
 Menu interativo para agilizar instalações, rotinas e configurações no Windows durante formatação ou manutenção de computadores.
 
-Versão atual: **2.5.0**
+Versão atual: **2.7.0**
 
 [![Menu interativo QuickWindowsX](./Images/MenuQWX.png "Menu interativo QuickWindowsX")](#rotinas-para-instala%C3%A7%C3%B5es-padr%C3%A3o)
 
@@ -111,16 +111,55 @@ QuickWindowsX/
 
 ### Navegação rápida (atalho direto)
 
-No menu principal, você pode ir diretamente a uma opção sem navegar pelos submenus usando o formato `sessao:opcao`:
+No menu principal, você pode executar opções diretamente sem navegar pelos submenus. O formato geral é:
+
+```
+sessao:op1,op2;sessao:sub:op1,op2;9:rot1,rot2
+```
 
 | Formato | Exemplo | Resultado |
 |---------|---------|-----------|
 | `sessao:opcao` | `3:7` | Executa a opção 7 da sessão 3 (Google Chrome) |
-| `sessao:opcao` | `2:1` | Executa a opção 1 da sessão 2 (Desligar o Windows) |
+| `sessao:op1,op2` | `3:1,7` | Executa as opções 1 e 7 da sessão 3 em sequência |
+| `s1:op1,op2;s2:op1` | `3:7;6:3,5` | Executa opções da sessão 3, depois da sessão 6 |
+| `sessao:sub:op1,op2` | `2:5:1,11` | Sessão 2 → sub-sessão 5 (Configurações) → opções 1 e 11 |
 | `9:rotinas` | `9:37,63,65` | Executa as rotinas 37, 63 e 65 diretamente |
-| `9:rotina` | `9:625` | Executa a rotina 625 (Limpar Spooler) diretamente |
+| formato completo | `1:4;2:5:1,11;6:25,26;9:622,624` | Múltiplas sessões, incluindo drill-down e rotinas |
 
-> **Sessão 9 (Rotinas):** use vírgula para separar múltiplas rotinas, igual à tela de rotinas normal.
+**Separadores:**
+- `,` → separa opções dentro do mesmo nível
+- `;` → separa blocos de sessões diferentes
+- `:` → separa níveis de navegação (sessão → sub-sessão → opções internas)
+
+> **Sessão 9 (Rotinas):** a vírgula separa os códigos de rotinas, igual à tela de rotinas normal.
+
+#### Exemplo prático
+
+Suponha que você queira executar as seguintes ações:
+
+| O que executar | Sessão | Localização |
+|---|---|---|
+| Documentação do QuickWindows | 1 | opção 4 |
+| Criar atalhos Desligar e Reiniciar | 2 | opção 6 |
+| Painel de Controle | 2 → sub 5 | opção 1 dentro de Configurações |
+| Sobre o Windows (winver) | 2 → sub 5 | opção 11 dentro de Configurações |
+| Limpar Spooler de Impressão | 6 | opção 25 |
+| Limpar Arquivos Temporários | 6 | opção 26 |
+| Windows Update Activation | 6 | opção 27 |
+| CPU-Z Portable | 6 | opção 22 |
+| Crystal Disk Info Portable | 6 | opção 24 |
+
+Tudo em um único comando no menu principal:
+
+```
+1:4;2:5:1,11;2:6;6:22,24,25,26,27
+```
+
+Ou usando a sessão 9 (Rotinas) para as ações da sessão 6:
+
+```
+1:4;2:5:1,11;2:6;9:622,624,625,626,627
+```
 
 ---
 
@@ -226,6 +265,8 @@ Salve o arquivo. Na próxima execução o QWX iniciará sem pedir senha.
 > As versões **1.x.x** correspondem ao **QuickWindows** (base original em PowerShell/CMD).
 > A versão **2.0.0** marca o início do **QuickWindowsX** (reescrita em Python 3).
 
+- **v2.7.0** 2026-06-24 — Navegacao aninhada com drill-down: formato `sessao:sub_opcao:opcoes` (ex: `2:5:1,11`) permite acessar opcoes dentro de sub-sessoes diretamente do menu principal, sem navegar manualmente pelos submenus intermediarios. `_configuracoes` e `_submenu` atualizados para suportar preset aninhado via tupla. README atualizado com exemplos do formato completo.
+- **v2.6.0** 2026-06-24 — Navegacao rapida estendida: suporte a multiplas opcoes por sessao (`3:1,7`) e multiplas sessoes por comando (`3:7;6:3,5;9:37,63`), usando virgula para separar opcoes e ponto-e-virgula para separar sessoes. README atualizado com tabela de formatos e separadores.
 - **v2.5.0** 2026-06-24 — Navegacao rapida por atalho direto no menu principal: digitando `sessao:opcao` (ex: `3:7` para Google Chrome) ou `9:rotinas` (ex: `9:37,63,65`) o QWX executa a acao sem navegar pelo submenu. Documentacao de navegacao rapida adicionada ao README.
 - **v2.4.0** 2026-06-24 — Sistema de log implementado em `src/logger.py`: todas as acoes executadas (submenus, rotinas em lote, inicializacao, eventos de autenticacao) sao registradas automaticamente em `%USERPROFILE%\GTiSupport\QWX_Log.txt` com timestamp no formato `yyyy/MM/dd HH:mm:ss`. Entradas inseridas sempre no topo do arquivo (mais recentes primeiro). Senha de protecao ampliada para aceitar letras, numeros e caracteres especiais (minimo 6 caracteres). Confirmacoes duplas de exclusao e atualizacao do QWX reduzidas para uma unica confirmacao.
 - **v2.3.0** 2026-06-24 — Protecao por senha de 6 digitos numericos: na primeira execucao o QWX oferece ativar a senha; em execucoes seguintes, se senha configurada, solicita autenticacao antes de exibir o menu (3 tentativas); gerenciador de senha em "Menu QuickWindows > Gerenciar Senha de Acesso" permite ativar, alterar ou remover a senha. Arquivo de senha armazenado em %USERPROFILE%\GTiSupport\qwx_auth.json (instrucoes de recuperacao no README). Modulo src/auth.py adicionado.
