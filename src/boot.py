@@ -124,7 +124,8 @@ def executar():
 
     try:
         cfg   = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))
-        title = cfg.get("promptWindowTitle", "GTi - QuickWindowsX")
+        base  = cfg.get("promptWindowTitle", "GTi - QuickWindowsX")
+        title = f"{base} v{ver}" if ver != "?" else base
         if os.name == "nt":
             import ctypes
             ctypes.windll.kernel32.SetConsoleTitleW(title)
@@ -192,7 +193,38 @@ def _handle_auth():
         print("  Deseja proteger o QWX com senha?")
         print("  (minimo 6 caracteres — opcional, Enter para pular)")
         print("  ─────────────────────────────────────────────")
-        resp = input("  Ativar protecao por senha? (s/N): ").strip().lower()
+        print("  Ativar protecao por senha? [s/N]: ", end="", flush=True)
+        if os.name == "nt":
+            try:
+                import msvcrt
+                resp = ""
+                while True:
+                    ch = msvcrt.getwch()
+                    if ch in ("\r", "\n"):
+                        print(); break
+                    low = ch.lower()
+                    if low in ("s", "n"):
+                        print(low); resp = low; break
+            except Exception:
+                resp = input().strip().lower()
+        else:
+            try:
+                import tty, termios
+                fd = sys.stdin.fileno()
+                old = termios.tcgetattr(fd)
+                try:
+                    tty.setraw(fd)
+                    ch = sys.stdin.read(1)
+                finally:
+                    termios.tcsetattr(fd, termios.TCSADRAIN, old)
+                if ch in ("\r", "\n", ""):
+                    print(); resp = ""
+                elif ch.lower() in ("s", "n"):
+                    resp = ch.lower(); print(resp)
+                else:
+                    print(); resp = ""
+            except Exception:
+                resp = input().strip().lower()
         if resp == "s":
             senha = _nova_senha_prompt()
             if senha and auth.save(senha):

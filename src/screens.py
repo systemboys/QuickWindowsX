@@ -34,9 +34,46 @@ def _em_desenvolvimento(nome_opcao):
     input("  Pressione Enter para voltar...")
 
 
-def _confirmar(pergunta):
-    resp = input(f"  {pergunta} [s/N]: ").strip().lower()
-    return resp in ("s", "sim")
+def _confirmar(pergunta, padrao_sim=False):
+    opcoes = "[S/n]" if padrao_sim else "[s/N]"
+    print(f"  {pergunta} {opcoes}: ", end="", flush=True)
+    if os.name == "nt":
+        try:
+            import msvcrt
+            while True:
+                ch = msvcrt.getwch()
+                if ch in ("\r", "\n"):
+                    print()
+                    return padrao_sim
+                low = ch.lower()
+                if low in ("s", "n"):
+                    print(low)
+                    return low == "s"
+        except Exception:
+            pass
+        resp = input().strip().lower()
+        return (resp in ("s", "sim")) if resp else padrao_sim
+    try:
+        import tty, termios
+        fd = sys.stdin.fileno()
+        old = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old)
+        if ch in ("\r", "\n", ""):
+            print()
+            return padrao_sim
+        low = ch.lower()
+        if low in ("s", "n"):
+            print(low)
+            return low == "s"
+        print()
+        return padrao_sim
+    except Exception:
+        resp = input().strip().lower()
+        return (resp in ("s", "sim")) if resp else padrao_sim
 
 
 def _input_opcao(prompt="  Opcao: ") -> str:

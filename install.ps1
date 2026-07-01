@@ -31,6 +31,8 @@
 # v1.2.0 2026-07-01, Marcos Aurélio:
 #   - Verifica se o AnyDesk está instalado antes de criar o atalho; se não estiver,
 #     pergunta no terminal (Y/n, padrão Y), baixa para %TEMP% e executa.
+# v1.3.0 2026-07-01, Marcos Aurélio:
+#   - Adicionada função Read-SingleKey para confirmações sem precisar pressionar Enter.
 #
 # Licença: GPL.
 
@@ -79,6 +81,22 @@ function Write-QWXLog([string]$msg) {
     Add-Content -Path "$fullPath\QWX_Log.txt" -Value "$ts | $msg" -ErrorAction SilentlyContinue
 }
 
+function Read-SingleKey([string]$prompt, [bool]$defaultYes = $false) {
+    $options = if ($defaultYes) { "[Y/n]" } else { "[y/N]" }
+    Write-Host "  $prompt $options " -NoNewline
+    try {
+        $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+        $char = $key.Character
+        Write-Host $char
+        if ($key.VirtualKeyCode -eq 13) { return $defaultYes }
+        return ($char -match "[Yy]")
+    } catch {
+        $resp = Read-Host
+        if ($resp -eq "") { return $defaultYes }
+        return ($resp -match "^[Yy]")
+    }
+}
+
 Write-QWXLog "QuickWindowsX: instalador iniciado."
 clear
 
@@ -94,9 +112,7 @@ try {
     if (-not $anydeskInstalled) {
         Write-Host ""
         Write-Host "  O AnyDesk nao esta instalado."
-        Write-Host "  Deseja fazer o download e executar o AnyDesk? [Y/n] " -NoNewline
-        $respAnydesk = Read-Host
-        if ($respAnydesk -eq "" -or $respAnydesk -match "^[Yy]$") {
+        if (Read-SingleKey "Deseja fazer o download e executar o AnyDesk?" $true) {
             $anydeskUrl  = "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/RemoteAccess/AnyDesk.exe"
             $anydeskPath = "$env:TEMP\AnyDesk.exe"
             Write-Host ""
