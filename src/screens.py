@@ -913,21 +913,80 @@ def _reset_anydesk():
     print()
     print("  === Reset AnyDesk ===")
     print()
-    print("  O servico AnyDesk sera parado, configuracoes removidas e reiniciado.")
+    print("  O servico AnyDesk sera parado, as configuracoes de ID serao removidas")
+    print("  e o AnyDesk sera reiniciado com uma nova ID.")
+    print("  Sessoes recentes e miniaturas serao preservadas.")
     print()
     if not _confirmar("Deseja redefinir o AnyDesk agora?"):
         return
     print()
     print("  Redefinindo AnyDesk...")
     ps_script = r"""
-        Stop-Service AnyDesk -Force -ErrorAction SilentlyContinue
-        Start-Sleep -Seconds 1
-        Remove-Item "$env:APPDATA\AnyDesk" -Recurse -Force -ErrorAction SilentlyContinue
-        Start-Service AnyDesk -ErrorAction SilentlyContinue
-        Write-Host ""
-        Write-Host "  [OK] AnyDesk redefinido com sucesso." -ForegroundColor Green
+        # Detectar executavel do AnyDesk
+        $anydeskExe = $null
+        foreach ($p in @("$env:ProgramFiles\AnyDesk\AnyDesk.exe", "${env:ProgramFiles(x86)}\AnyDesk\AnyDesk.exe")) {
+            if (Test-Path $p) { $anydeskExe = $p; break }
+        }
+        if (-not $anydeskExe) {
+            Write-Host "  [ERRO] AnyDesk nao encontrado. Verifique se esta instalado." -ForegroundColor Red
+            exit
+        }
+
+        # Parar servico e processo
+        Stop-Service -Name AnyDesk -Force -ErrorAction SilentlyContinue
+        Get-Process -Name AnyDesk -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 2
+
+        # Remover service.conf do sistema e do usuario
+        Remove-Item -Path "$env:ProgramData\AnyDesk\service.conf" -Force -ErrorAction SilentlyContinue
+        Remove-Item -Path "$env:APPDATA\AnyDesk\service.conf" -Force -ErrorAction SilentlyContinue
+
+        # Preservar user.conf (sessoes recentes) em temp
+        $userConfBak = "$env:TEMP\anydesk_user_conf_bak.conf"
+        Copy-Item -Path "$env:APPDATA\AnyDesk\user.conf" -Destination $userConfBak -Force -ErrorAction SilentlyContinue
+
+        # Limpar configs preservando user.conf e thumbnails
+        Get-ChildItem -Path "$env:ProgramData\AnyDesk\*" -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -ne "user.conf" } |
+            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+        Get-ChildItem -Path "$env:APPDATA\AnyDesk\*" -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -notin @("user.conf", "thumbnails") } |
+            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+
+        # Iniciar servico e executavel para gerar nova ID
+        Start-Service -Name AnyDesk -ErrorAction SilentlyContinue
+        Start-Process -FilePath $anydeskExe -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 4
+
+        # Verificar se nova ID foi gerada
+        $systemConf = "$env:ProgramData\AnyDesk\system.conf"
+        $novaId = $false
+        if (Test-Path $systemConf) {
+            $conteudo = Get-Content -Path $systemConf -Raw -ErrorAction SilentlyContinue
+            if ($conteudo -match "ad.anynet.id=") { $novaId = $true }
+        }
+
+        if ($novaId) {
+            # Para novamente, restaura user.conf e reinicia
+            Stop-Service -Name AnyDesk -Force -ErrorAction SilentlyContinue
+            Get-Process -Name AnyDesk -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+            Start-Sleep -Seconds 1
+            if (Test-Path $userConfBak) {
+                Copy-Item -Path $userConfBak -Destination "$env:APPDATA\AnyDesk\user.conf" -Force -ErrorAction SilentlyContinue
+                Remove-Item -Path $userConfBak -Force -ErrorAction SilentlyContinue
+            }
+            Start-Service -Name AnyDesk -ErrorAction SilentlyContinue
+            Start-Process -FilePath $anydeskExe -ErrorAction SilentlyContinue
+            Write-Host ""
+            Write-Host "  [OK] AnyDesk redefinido com sucesso. Nova ID gerada." -ForegroundColor Green
+        } else {
+            Write-Host ""
+            Write-Host "  [AVISO] Reset concluido, mas nao foi possivel confirmar nova ID." -ForegroundColor Yellow
+            Write-Host "  Verifique o AnyDesk manualmente." -ForegroundColor Yellow
+        }
     """
     _ps(ps_script)
+    logger.log("Reset AnyDesk executado.")
     print()
     input("  Pressione Enter para continuar...")
 

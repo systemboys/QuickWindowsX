@@ -28,6 +28,9 @@
 # v1.1.3 2026-06-23, Marcos Aurélio:
 #   - QWX agora abre em janela cmd.exe compacta via Start-Process, em vez de herdar
 #     a janela grande do Windows PowerShell onde o instalador foi executado.
+# v1.2.0 2026-07-01, Marcos Aurélio:
+#   - Verifica se o AnyDesk está instalado antes de criar o atalho; se não estiver,
+#     pergunta no terminal (Y/n, padrão Y), baixa para %TEMP% e executa.
 #
 # Licença: GPL.
 
@@ -81,6 +84,35 @@ clear
 
 # Corpo principal — try/catch global mantém janela aberta se algo falhar
 try {
+
+    # ── Verificar / oferecer AnyDesk ─────────────────────────────────────────
+    $anydeskInstalled = (Test-Path "$env:ProgramFiles\AnyDesk") -or
+                        (Test-Path "${env:ProgramFiles(x86)}\AnyDesk") -or
+                        ($null -ne (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\AnyDesk" -ErrorAction SilentlyContinue)) -or
+                        ($null -ne (Get-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\AnyDesk" -ErrorAction SilentlyContinue))
+
+    if (-not $anydeskInstalled) {
+        Write-Host ""
+        Write-Host "  O AnyDesk nao esta instalado."
+        Write-Host "  Deseja fazer o download e executar o AnyDesk? [Y/n] " -NoNewline
+        $respAnydesk = Read-Host
+        if ($respAnydesk -eq "" -or $respAnydesk -match "^[Yy]$") {
+            $anydeskUrl  = "https://github.com/systemboys/_GTi_Support_/raw/main/Windows/Internet/RemoteAccess/AnyDesk.exe"
+            $anydeskPath = "$env:TEMP\AnyDesk.exe"
+            Write-Host ""
+            Write-Host "  Baixando AnyDesk..."
+            try {
+                Start-BitsTransfer -Source $anydeskUrl -Destination $anydeskPath -ErrorAction Stop
+            } catch {
+                Invoke-WebRequest -Uri $anydeskUrl -OutFile $anydeskPath -UseBasicParsing -ErrorAction Stop
+            }
+            Write-Host "  Iniciando AnyDesk..."
+            Start-Process -FilePath $anydeskPath
+            Write-QWXLog "AnyDesk baixado e iniciado via instalador."
+        } else {
+            Write-QWXLog "Download do AnyDesk ignorado pelo usuario."
+        }
+    }
 
     # ── Atalho na Área de Trabalho ────────────────────────────────────────────
     $desktopPath  = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::DesktopDirectory)
